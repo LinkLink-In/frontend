@@ -11,23 +11,29 @@
             <Button href="/login">Log in</Button>
         </div>
     </header>
-<div class="wrapper">
-<div class="content">
-    <h1>Convert your links into shrimps.<br>Easy and fast</h1>
-    <form>
-        <div class="form-main">
-            <Input placeholder="https://example.com/some-very-long-link..."/>
-            <Button>Submit link</Button>
+    <div class="wrapper">
+        <div class="content">
+            <h1>Convert your links into shrimps.<br>Easy and fast</h1>
+            <form>
+                <div class="form-main">
+                    <Input placeholder="https://example.com/some-very-long-link..."/>
+                    <Button>Submit link</Button>
+                </div>
+                <div class="form-parameters">
+                    <span>Will be available</span>
+                    <span class="soon">Soon(™)</span>
+                </div>
+            </form>
         </div>
-        <div class="form-parameters">
-            <span>Will be available</span>
-            <span class="soon">Soon(™)</span>
-        </div>
-    </form>
-</div>
-</div>
+    </div>
 </div>
 <style>
+    .main {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
     header {
         display: flex;
         justify-content: space-between;
@@ -47,7 +53,8 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        height: 100vh;
+        flex-direction: column;
+        flex-grow: 1;
         align-items: center;
     }
     .content {
