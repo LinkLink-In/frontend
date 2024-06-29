@@ -3,13 +3,6 @@
     import Switch from '../../lib/components/ui/switch/switch.svelte'
 </script>
 <div class="main">
-    <header>
-        <span class="header"><a class="header-link" href="/">LinkLink In</a></span>
-        <div class="controls">
-            <Switch/>
-            <Button href="/login">Log in</Button>
-        </div>
-    </header>
     <div class="wrapper">
         <div class="content">
             <div class="target">
@@ -47,21 +40,6 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-    }
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-    }
-    .controls {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-    }
-    .header {
-        font-weight: 700;
-        font-size: 1.5rem;
     }
     .wrapper {
         display: flex;
