@@ -3,25 +3,8 @@
     export let data;
 </script>
 
-<div class="main">
-    <div class="form-wrapper">
+<div class="flex w-full h-screen flex-col">
+    <div class="flex flex-col items-center justify-center w-full flex-grow">
         <LoginForm data={data.form}/>
     </div>
 </div>
-
-<style>
-    .main {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
-    .form-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        flex-grow: 1;
-    }
-</style>

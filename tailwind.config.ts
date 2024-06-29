@@ -6,6 +6,12 @@ const config: Config = {
 	content: ["./src/**/*.{html,js,svelte,ts}"],
 	safelist: ["dark"],
 	theme: {
+		colors: {
+			black: "#1A1B32",
+			blue: "#394ED9",
+			purple: "#A1A3FC",
+			bg_white: "#EEECF8"
+		},
 		container: {
 			center: true,
 			padding: "2rem",
