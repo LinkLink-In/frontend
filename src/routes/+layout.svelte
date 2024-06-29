@@ -4,20 +4,23 @@
   import "../app.css";
 </script>
 
-<header class="flex justify-between items-center px-8 py-4">
-    <span class="font-bold text-2xl">
-        <a href="/">LinkLink In</a>
-    </span>
-    <div class="flex items-center gap-8">
-        <div class="flex gap-2 items-center mr-4">
-            <i class="fa-solid fa-sun fa-sm"></i>
-            <Switch class=""/>
-            <i class="fa-solid fa-moon fa-sm"></i>
+<div class="flex flex-col w-screen min-h-screen">
+    <header class="w-full h-16 flex justify-between items-center px-8 py-4">
+        <span class="font-bold text-2xl">
+            <a href="/">LinkLink In</a>
+        </span>
+        <div class="flex items-center gap-8">
+            <div class="flex gap-2 items-center mr-4">
+                <i class="fa-solid fa-sun fa-sm"></i>
+                <Switch class=""/>
+                <i class="fa-solid fa-moon fa-sm"></i>
+            </div>
+            <Button href="/login">Log in</Button>
         </div>
-        <Button href="/login">Log in</Button>
-    </div>
-</header>
+    </header>
 
-<div class="bg-bg_white">
-    <slot/>
+    <div class="flex bg-bg_white grow">
+        <slot/>
+    </div>
 </div>
+
