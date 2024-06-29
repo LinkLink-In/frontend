@@ -31,7 +31,10 @@
     </Form.Field>
     <Form.Field {form} name="password">
         <Form.Control let:attrs>
-            <Form.Label>Password</Form.Label>
+            <Form.Label class="flex justify-between">
+                Password
+                <a href="/reset_password" class="underline">Forgot password?</a>
+            </Form.Label>
             <Input {...attrs} placeholder="••••••••••••" type="password" bind:value={$formData.password} class="border-2"/>
         </Form.Control>
         <Form.FieldErrors />

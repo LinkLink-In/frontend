@@ -3,74 +3,20 @@
     import Button from '../lib/components/ui/button/button.svelte'
     import Switch from '../lib/components/ui/switch/switch.svelte'
 </script>
-<div class="main">
-    <div class="wrapper">
-        <div class="content">
-            <h1>Convert your links into shrimps.<br>Easy and fast</h1>
-            <form>
-                <div class="form-main">
+<div class="w-full min-h-full flex flex-col">
+    <div class="flex justify-center w-full flex-col flex-grow items-center">
+        <div class="flex flex-col items-center w-[50rem] gap-3">
+            <h1 class="font-semibold text-center text-3xl">Convert your links into shrimps.<br>Easy and fast</h1>
+            <form class="flex flex-col w-full gap-3">
+                <div class="flex gap-4">
                     <Input placeholder="https://example.com/some-very-long-link..."/>
                     <Button>Submit link</Button>
                 </div>
-                <div class="form-parameters">
-                    <span>Will be available</span>
-                    <span class="soon">Soon(™)</span>
+                <div class="flex flex-col items-center justify-center bg-[#cccccc] p-3 rounded-xl">
+                    <span class="text-xl">Will be available</span>
+                    <span class="text-xl font-semibold">Soon(™)</span>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<style>
-    .main {
-        width: 100%;
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .wrapper {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        flex-direction: column;
-        flex-grow: 1;
-        align-items: center;
-    }
-    .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 50rem;
-        gap: 1.5rem;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 0.75rem;
-    }
-    h1 {
-        font-weight: 600;
-        text-align: center;
-        font-size: 2rem;
-    }
-    .form-main {
-        display: flex;
-        gap: 1rem;
-    }
-    .form-parameters {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: #cccccc;
-        padding: 0.75rem;
-        border-radius: 0.75rem;
-    }
-    span {
-        font-size: 1.25rem;
-    }
-    .soon {
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
-</style>
