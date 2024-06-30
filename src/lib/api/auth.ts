@@ -32,10 +32,13 @@ export async function userRegister(name: string, email: string, password: string
     return new Promise((resolve) => {
         fetch(`${import.meta.env.VITE_API_HOST}/auth/register`, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
             body: JSON.stringify({ email, password, name })
         }).then(
             (r) => r.json()
-        ).then((r) => r.json()).then((data: UserRead) => {
+        ).then((data: UserRead) => {
             resolve(data);
         })
     })
