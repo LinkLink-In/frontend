@@ -1,5 +1,5 @@
 import type { Actions } from "./$types.js";
-import { fail, redirect } from "@sveltejs/kit";
+import { fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
 import {superValidate, setError, type SuperValidated, type Infer} from "sveltekit-superforms";
 import {type FormSchema, formSchema} from "./schema";
@@ -23,6 +23,7 @@ export const actions: Actions = {
         if (!form.valid) {
             return fail(400, {
                 form,
+                authorized: false
             });
         }
         const authResponse: BearerResponse = await userLogin(form.data.email, form.data.password);
@@ -32,11 +33,9 @@ export const actions: Actions = {
         }
 
         event.cookies.set('access_token', authResponse.access_token, { path: '/', sameSite: 'strict' })
-        redirect(302, '/');
 
         return {
-            form,
-            authorized: true
+            form
         };
-    },
+    }
 };

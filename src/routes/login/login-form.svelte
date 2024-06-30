@@ -8,15 +8,22 @@
     import { zodClient } from "sveltekit-superforms/adapters";
     import {loginStatus} from "$lib/stores/loginStatus";
     import type {LoginData} from "./+page.server";
+    import {goto} from "$app/navigation";
 
     export let data: LoginData;
 
     const form = superForm(data, {
         validators: zodClient(formSchema),
+        onResult({ result, formElement, cancel }) {
+            if (result.status === 200) {
+                cancel()
+                loginStatus.set(true);
+                goto("/");
+            }
+        }
     });
 
     const { form: formData, enhance } = form;
-    loginStatus.set(data.authorized);
 </script>
 
 <form method="POST" use:enhance class="w-80 flex flex-col gap-2">
