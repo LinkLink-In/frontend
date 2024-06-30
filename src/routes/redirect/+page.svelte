@@ -26,7 +26,7 @@
                         <span class="flex text-4xl font-semibold">
                             $4.99<span class="text-xl opacity-50 line-through">$9.99</span>
                         </span>
-                        <button class="bg-[#F37C5A] text-white p-3 w-full rounded-xl">Order now</button>
+                        <button class="bg-orange text-white p-3 w-full rounded-xl">Order now</button>
                     </div>
                 </div>
             </div>

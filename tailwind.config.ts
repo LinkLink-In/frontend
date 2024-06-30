@@ -10,6 +10,7 @@ const config: Config = {
 			black: "#1A1B32",
 			blue: "#394ED9",
 			purple: "#A1A3FC",
+			orange: "#F37C5A",
 			bg_white: "#EEECF8"
 		},
 		container: {
