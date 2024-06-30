@@ -1,21 +1,22 @@
 <script lang="ts">
     import { Field, Control, Label, FieldErrors, Button } from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
-    import { formSchema, type FormSchema } from "./schema";
+    import { formSchema } from "./schema";
     import {
-        type SuperValidated,
-        type Infer,
         superForm,
     } from "sveltekit-superforms";
     import { zodClient } from "sveltekit-superforms/adapters";
+    import {loginStatus} from "$lib/stores/loginStatus";
+    import type {LoginData} from "./+page.server";
 
-    export let data: SuperValidated<Infer<FormSchema>>;
+    export let data: LoginData;
 
     const form = superForm(data, {
         validators: zodClient(formSchema),
     });
 
     const { form: formData, enhance } = form;
+    loginStatus.set(data.authorized);
 </script>
 
 <form method="POST" use:enhance class="w-80 flex flex-col gap-2">
