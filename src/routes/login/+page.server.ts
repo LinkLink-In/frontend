@@ -1,9 +1,10 @@
 import type { Actions } from "./$types.js";
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
-import { superValidate } from "sveltekit-superforms";
+import {superValidate, setError} from "sveltekit-superforms";
 import { formSchema } from "./schema";
 import { zod } from "sveltekit-superforms/adapters";
+import { type BearerResponse, userLogin} from "$lib/api/auth";
 
 export const load: PageServerLoad = async () => {
     return {
@@ -19,6 +20,15 @@ export const actions: Actions = {
                 form,
             });
         }
+        const authResponse: BearerResponse = await userLogin(form.data.email, form.data.password);
+        if (!authResponse.ok) {
+            setError(form, 'email', '')
+            return setError(form, 'password', 'Incorrect login or password');
+        }
+
+        event.cookies.set('access_token', authResponse.access_token, { path: '/', sameSite: 'strict' })
+        redirect(302, '/');
+
         return {
             form,
         };
