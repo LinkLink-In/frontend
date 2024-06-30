@@ -21,7 +21,7 @@ export const actions: Actions = {
             });
         }
         const authResponse: BearerResponse = await userLogin(form.data.email, form.data.password);
-        if (!authResponse.ok) {
+        if (!authResponse.access_token) {
             setError(form, 'email', '')
             return setError(form, 'password', 'Incorrect login or password');
         }
