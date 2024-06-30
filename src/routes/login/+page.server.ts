@@ -21,7 +21,7 @@ export const actions: Actions = {
             });
         }
         const authResponse: BearerResponse = await userLogin(form.data.email, form.data.password);
-        if (authResponse.detail === "LOGIN_BAD_CREDENTIALS") {
+        if (!authResponse.ok) {
             setError(form, 'email', '')
             return setError(form, 'password', 'Incorrect login or password');
         }
