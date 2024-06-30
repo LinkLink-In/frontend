@@ -19,7 +19,7 @@ export const actions = {
             });
         }
         const registerResponse: UserRead = await userRegister(form.data.name, form.data.email, form.data.password);
-        if (!registerResponse.ok) {
+        if (!registerResponse.id) {
             switch (registerResponse.detail) {
                 case "REGISTER_USER_ALREADY_EXISTS":
                     return setError(form, 'email', 'This email already registered')
