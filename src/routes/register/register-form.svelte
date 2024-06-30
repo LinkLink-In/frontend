@@ -21,10 +21,10 @@
 <form method="POST" use:enhance>
     <h1>Register</h1>
     <div>
-        <Form.Field {form} name="username">
+        <Form.Field {form} name="name">
             <Form.Control let:attrs>
                 <Form.Label>Username</Form.Label>
-                <Input {...attrs} placeholder="username" bind:value={$formData.username} />
+                <Input {...attrs} placeholder="Ivan" bind:value={$formData.name} />
 
             </Form.Control>
             <Form.FieldErrors />
