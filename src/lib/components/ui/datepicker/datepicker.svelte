@@ -13,10 +13,13 @@
   const df = new DateFormatter("en-US", {
     dateStyle: "long"
   });
-  export let dateValue
+  export let dateValue;
   let value: DateValue | undefined = undefined;
   $: {
-    dateValue = value;
+    if (value) {
+      let date = new Date(value!.year, value!.month, value!.day)
+      dateValue = date.toISOString();
+    }
   }
 </script>
  
