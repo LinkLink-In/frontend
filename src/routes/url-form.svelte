@@ -19,7 +19,6 @@
             });
         },
         onResult({ result, formElement, cancel }) {
-            console.log(result);
             $formData!.redirect_url = `${import.meta.env.VITE_LINK_HOST}/${result!.data!.url}`;
             if (result.status === 200) {
                 cancel()
