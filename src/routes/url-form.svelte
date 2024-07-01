@@ -9,6 +9,9 @@
 
     export let data;
 
+    let endIconVal;
+    let current_url;
+
     const form = superForm(data, {
         validators: zodClient(formSchema),
         dataType: 'json',
@@ -19,20 +22,40 @@
             });
         },
         onResult({ result, formElement, cancel }) {
-            $formData!.redirect_url = `${import.meta.env.VITE_LINK_HOST}/${result!.data!.url}`;
             if (result.status === 200) {
+                $formData!.redirect_url = `${import.meta.env.VITE_LINK_HOST}/${result!.data!.url}`;
+                current_url = `${import.meta.env.VITE_LINK_HOST}/${result!.data!.url}`
                 cancel()
             }
         }
     });
+
+    async function handleCopy() {
+        const type = "text/plain";
+        const blob = new Blob([current_url], { type });
+        const data = [new ClipboardItem({ [type]: blob })];
+        await navigator.clipboard.write(data);
+        endIconVal = "check"
+        setTimeout(() => {
+            endIconVal = "copy";
+        }, 1000)
+    }
+
     const { form: formData, enhance } = form;
+    $: {
+        if ($formData.redirect_url === current_url) {
+            endIconVal = "copy";
+        } else {
+            endIconVal = ""
+        }
+    }
 </script>
 
 <form method="POST" use:enhance class="flex flex-col w-full gap-3">
     <div class="flex gap-4">
         <Field {form} name="redirect_url" class="w-full">
             <Control let:attrs class="w-full">
-                <Input {...attrs} placeholder="https://example.com/some-very-long-link..." type="url" bind:value={$formData.redirect_url} />
+                <Input {...attrs} placeholder="https://example.com/some-very-long-link..." type="url" bind:value={$formData.redirect_url} endIconHandler={handleCopy} bind:endIcon={endIconVal} />
             </Control>
             <FieldErrors />
         </Field>
