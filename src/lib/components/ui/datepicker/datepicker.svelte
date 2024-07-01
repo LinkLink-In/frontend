@@ -13,8 +13,11 @@
   const df = new DateFormatter("en-US", {
     dateStyle: "long"
   });
- 
+  export let dateValue
   let value: DateValue | undefined = undefined;
+  $: {
+    dateValue = value;
+  }
 </script>
  
 <Root>
