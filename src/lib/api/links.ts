@@ -28,9 +28,13 @@ export async function createLink(data: LinkCreate, token: string): Promise<LinkR
             },
             body: JSON.stringify(data)
         }).then(
-            (r) => r.json()
+            (r) => {
+                return r.json()
+            }
         ).then((data: LinkRead) => {
             resolve(data);
+        }).catch((e) => {
+            console.log("link", e);
         })
     })
 }
