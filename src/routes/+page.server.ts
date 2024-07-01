@@ -4,6 +4,8 @@ import {superValidate, setError, type SuperValidated, type Infer} from "svelteki
 import {type FormSchema, formSchema} from "./schema";
 import { zod } from "sveltekit-superforms/adapters";
 import {createLink, type LinkRead} from "$lib/api/links";
+import crypto from "crypto";
+import {type BannerRead, createBanner} from "$lib/api/banners";
 export interface LinkData extends SuperValidated<Infer<FormSchema>> {
     url: string | null;
 }
@@ -18,7 +20,6 @@ export const actions: Actions = {
     default: async (event) => {
         const form = await superValidate(event, zod(formSchema));
         if (!form.valid) {
-            setError(form, 'redirect_url', 'unknown err')
             return fail(400, {
                 form,
                 url: null
@@ -26,17 +27,27 @@ export const actions: Actions = {
         }
 
         const token = event.cookies.get('access_token');
-        if (!token) redirect(401, "/login");
+        if (!token) redirect(302, "/login");
+
+        const banner = event.cookies.get('banner_id');
+        if (!banner) {
+            const bannerCreate: BannerRead = await createBanner({
+                "title": `${crypto.randomUUID().toString()}`,
+                "description": `${crypto.randomUUID().toString()}`
+            }, token);
+            event.cookies.set("banner_id", bannerCreate.id, { path: '/', sameSite: 'strict' });
+        }
+
         const linkResponse: LinkRead = await createLink({
-            short_id: form.data.short_id,
-            redirect_url: form.data.redirect_url,
-            expiration_date: form.data.expiration_date,
-            redirects_limit: form.data.redirects_limit,
-            redirects_left: form.data.redirects_left,
-            passphrase_hash: form.data.passphrase_hash,
-            banner_id: form.data.banner_id
+            "short_id": form.data.short_id,
+            "redirect_url": form.data.redirect_url,
+            "expiration_date": form.data.expiration_date,
+            "redirects_limit": parseInt(form.data.redirects_limit),
+            "redirects_left": 100,
+            "passphrase_hash": "sdfkpfsdfkoskof",
+            "banner_id": event.cookies.get("banner_id")!
         }, token);
-        console.log(linkResponse);
+
         if (!linkResponse.owner_id) {
             setError(form, 'redirect_url', '')
             return fail(400, {
