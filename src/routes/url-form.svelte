@@ -8,20 +8,25 @@
     import {formSchema} from "./schema";
 
     export let data;
-    let current_url;
-    //
+
     const form = superForm(data, {
         validators: zodClient(formSchema),
+        dataType: 'json',
+        onSubmit({ jsonData }) {
+            jsonData({
+                ...$formData,
+                redirects_limit: $formData!.redirects_limit,
+            });
+        },
         onResult({ result, formElement, cancel }) {
             console.log(result);
+            $formData!.redirect_url = `${import.meta.env.VITE_LINK_HOST}/${result!.data!.url}`;
             if (result.status === 200) {
                 cancel()
-                formData.redirect_url = result.data.url
             }
         }
     });
     const { form: formData, enhance } = form;
-
 </script>
 
 <form method="POST" use:enhance class="flex flex-col w-full gap-3">
@@ -40,7 +45,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="expiration_date_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="time-check" bind:value={$formData.expiration_date_enabled} />
+                            <Checkbox {...attrs} class="scale-125" id="time-check" />
                             <Label class="text-[1rem]" for="time-check">Time limit</Label>
                         </Control>
                         <FieldErrors />
@@ -48,7 +53,7 @@
                 </div>
                 <Field {form} name="expiration_date">
                     <Control let:attrs>
-                        <DatePicker {...attrs} bind:value={$formData.expiration_date}/>
+                        <DatePicker {...attrs} bind:dateValue={$formData.expiration_date}/>
                     </Control>
                     <FieldErrors />
                 </Field>
@@ -57,7 +62,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="redirects_limit_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="visit-check" bind:value={$formData.redirects_limit_enabled} />
+                            <Checkbox {...attrs} class="scale-125" id="visit-check" />
                             <Label class="text-[1rem]" for="visit-check">Visit limit</Label>
                         </Control>
                         <FieldErrors />
@@ -76,7 +81,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="short_id_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="custom-check" checked disabled bind:value={$formData.short_id_enabled}/>
+                            <Checkbox {...attrs} class="scale-125" id="custom-check" checked disabled/>
                             <Label class="text-[1rem]" for="custom-check">Custom link</Label>
                         </Control>
                         <FieldErrors />
@@ -93,7 +98,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="stats_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="stat-check" checked disabled bind:value={$formData.stats_enabled}/>
+                            <Checkbox {...attrs} class="scale-125" id="stat-check" checked disabled/>
                             <Label class="text-[1rem]" for="stat-check">Collect statistics</Label>
                         </Control>
                         <FieldErrors />
