@@ -15,6 +15,7 @@
 	export let readonly: $$Props["readonly"] = undefined;
 	export let startIcon: string = "";
 	export let endIcon: string = "";
+	export let endIconHandler: () => void;
 </script>
 
 <div class="flex relative items-center w-full">
@@ -46,6 +47,6 @@
 	on:wheel|passive
 	{...$$restProps}
 />
-	<div class="mr-2 absolute right-1.5 top-1/2 transform -translate-y-1/2"><i class={`fa-solid fa-${endIcon} opacity-50`}></i></div>
+	<div on:click={endIconHandler} class="mr-2 absolute right-1.5 top-1/2 transform -translate-y-1/2"><i class={`fa-solid fa-${endIcon} opacity-50`}></i></div>
 </div>
 

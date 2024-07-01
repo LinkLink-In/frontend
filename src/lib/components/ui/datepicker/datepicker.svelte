@@ -8,17 +8,23 @@
   import { cn } from "$lib/utils.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import { Calendar } from "$lib/components/ui/calendar/index.js";
-  import * as Popover from "$lib/components/ui/popover/index.js";
+  import { Root, Trigger, Content} from "$lib/components/ui/popover/index.js";
  
   const df = new DateFormatter("en-US", {
     dateStyle: "long"
   });
- 
+  export let dateValue;
   let value: DateValue | undefined = undefined;
+  $: {
+    if (value) {
+      let date = new Date(value!.year, value!.month, value!.day)
+      dateValue = date.toISOString();
+    }
+  }
 </script>
  
-<Popover.Root>
-  <Popover.Trigger asChild let:builder>
+<Root>
+  <Trigger asChild let:builder>
     <Button
       variant="outline"
       class={cn(
@@ -30,8 +36,8 @@
       <CalendarIcon class="mr-2 h-4 w-4" />
       {value ? df.format(value.toDate(getLocalTimeZone())) : "Pick a date"}
     </Button>
-  </Popover.Trigger>
-  <Popover.Content class="w-auto p-0">
+  </Trigger>
+  <Content class="w-auto p-0">
     <Calendar bind:value initialFocus />
-  </Popover.Content>
-</Popover.Root>
+  </Content>
+</Root>

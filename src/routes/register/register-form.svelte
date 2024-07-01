@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as Form from "$lib/components/ui/form";
+    import { Field, Control, Label, FieldErrors, Button } from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
     import { formSchema, type FormSchema } from "./schema";
     import {
@@ -21,38 +21,38 @@
 <form method="POST" use:enhance>
     <h1>Register</h1>
     <div>
-        <Form.Field {form} name="name">
-            <Form.Control let:attrs>
-                <Form.Label>Username</Form.Label>
+        <Field {form} name="name">
+            <Control let:attrs>
+                <Label>Username</Label>
                 <Input {...attrs} placeholder="Ivan" bind:value={$formData.name} />
 
-            </Form.Control>
-            <Form.FieldErrors />
-        </Form.Field>
-        <Form.Field {form} name="email">
-            <Form.Control let:attrs>
-                <Form.Label>Email</Form.Label>
+            </Control>
+            <FieldErrors />
+        </Field>
+        <Field {form} name="email">
+            <Control let:attrs>
+                <Label>Email</Label>
                 <Input {...attrs} placeholder="username@example.com" bind:value={$formData.email} />
 
-            </Form.Control>
-            <Form.FieldErrors />
-        </Form.Field>
-        <Form.Field {form} name="password">
-            <Form.Control let:attrs>
-                <Form.Label>Password</Form.Label>
+            </Control>
+            <FieldErrors />
+        </Field>
+        <Field {form} name="password">
+            <Control let:attrs>
+                <Label>Password</Label>
                 <Input {...attrs} placeholder="••••••••••••" type="password" bind:value={$formData.password} />
-            </Form.Control>
-            <Form.FieldErrors />
-        </Form.Field>
-        <Form.Field {form} name="password_repeat">
-            <Form.Control let:attrs>
-                <Form.Label>Repeat your password</Form.Label>
+            </Control>
+            <FieldErrors />
+        </Field>
+        <Field {form} name="password_repeat">
+            <Control let:attrs>
+                <Label>Repeat your password</Label>
                 <Input {...attrs} placeholder="••••••••••••" type="password" bind:value={$formData.password_repeat} />
-            </Form.Control>
-            <Form.FieldErrors />
-        </Form.Field>
+            </Control>
+            <FieldErrors />
+        </Field>
     </div>
-    <Form.Button class="w-full">Submit</Form.Button>
+    <Button class="w-full">Submit</Button>
     <p>Already have an account? <a href="/login">Log in</a></p>
 </form>
 
