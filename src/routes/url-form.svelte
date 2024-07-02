@@ -53,7 +53,7 @@
 
 <form method="POST" use:enhance class="flex flex-col w-full gap-3">
     <div class="flex gap-4">
-        <Field {form} name="redirect_url" class="w-full">
+        <Field {form} name="redirect_url" class="w-full space-y-0">
             <Control let:attrs class="w-full">
                 <Input {...attrs} placeholder="https://example.com/some-very-long-link..." type="url" bind:value={$formData.redirect_url} endIconHandler={handleCopy} bind:endIcon={endIconVal} />
             </Control>
