@@ -62,9 +62,9 @@
         <Button>Generate link</Button>
     </div>
     <div class="flex items-center bg-[#FFFFFF] p-3 rounded-xl gap-3">
-        <div class="flex flex-col gap-3 p-3">
+        <div class="flex flex-col gap-3 p-3 h-full">
             <div class="flex flex-col gap-3">
-                <Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0 space">
+                <Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
                     <Control let:attrs>
                         <Checkbox {...attrs} id="time-check" />
                         <Label class="text-[1rem]" for="time-check">Time limit</Label>
@@ -77,17 +77,15 @@
                     <FieldErrors />
                 </Field>
             </div>
-            <div class="flex flex-col gap-2">
-                <div class="flex items-center space-x-4">
-                    <Field {form} name="redirects_limit_enabled">
-                        <Control let:attrs>
-                            <Checkbox {...attrs} id="visit-check" />
-                            <Label class="text-[1rem]" for="visit-check">Visit limit</Label>
-                        </Control>
-                        <FieldErrors />
-                    </Field>
-                </div>
-                <Field {form} name="redirects_limit">
+            <div class="flex flex-col gap-3">
+                <Field {form} name="redirects_limit_enabled" class="flex items-center gap-3 space-y-0">
+                    <Control let:attrs>
+                        <Checkbox {...attrs} id="visit-check" />
+                        <Label class="text-[1rem]" for="visit-check">Visit limit</Label>
+                    </Control>
+                    <FieldErrors />
+                </Field>
+                <Field {form} name="redirects_limit" class="space-y-0">
                     <Control let:attrs>
                         <Input {...attrs} placeholder="100" startIcon="eye" type="number" bind:value={$formData.redirects_limit}></Input>
                     </Control>
@@ -95,18 +93,16 @@
                 </Field>
             </div>
         </div>
-        <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-2">
-                <div class="flex items-center space-x-4">
-                    <Field {form} name="short_id_enabled">
+        <div class="flex flex-col gap-3 p-3 h-full">
+            <div class="flex flex-col gap-3">
+                    <Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
                         <Control let:attrs>
                             <Checkbox {...attrs} id="custom-check" checked disabled/>
                             <Label class="text-[1rem]" for="custom-check">Custom link</Label>
                         </Control>
                         <FieldErrors />
                     </Field>
-                </div>
-                <Field {form} name="short_id">
+                <Field {form} name="short_id" class="space-y-0">
                     <Control let:attrs>
                         <Input {...attrs} placeholder="anijakich" startIcon="link" bind:value={$formData.short_id}></Input>
                     </Control>
@@ -114,15 +110,13 @@
                 </Field>
             </div>
             <div class="flex flex-col gap-3">
-                <div class="flex items-center space-x-4">
-                    <Field {form} name="stats_enabled">
-                        <Control let:attrs>
-                            <Checkbox {...attrs} id="stat-check" checked disabled/>
-                            <Label class="text-[1rem]" for="stat-check">Collect statistics</Label>
-                        </Control>
-                        <FieldErrors />
-                    </Field>
-                </div>
+                <Field {form} name="stats_enabled" class="flex items-center gap-3 space-y-0">
+                    <Control let:attrs>
+                        <Checkbox {...attrs} id="stat-check" checked disabled/>
+                        <Label class="text-[1rem]" for="stat-check">Collect statistics</Label>
+                    </Control>
+                    <FieldErrors />
+                </Field>
                 <div class="text-sm">Login into your account to collect statistics  and info about visitors.</div>
             </div>
         </div>
