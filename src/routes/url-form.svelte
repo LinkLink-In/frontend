@@ -61,19 +61,16 @@
         </Field>
         <Button>Generate link</Button>
     </div>
-    <div class="flex items-center justify-center bg-[#FFFFFF] p-4 rounded-xl gap-8">
-        <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-2">
-                <div class="flex items-center space-x-4">
-                    <Field {form} name="expiration_date_enabled">
-                        <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="time-check" />
-                            <Label class="text-[1rem]" for="time-check">Time limit</Label>
-                        </Control>
-                        <FieldErrors />
-                    </Field>
-                </div>
-                <Field {form} name="expiration_date">
+    <div class="flex items-center bg-[#FFFFFF] p-3 rounded-xl gap-3">
+        <div class="flex flex-col gap-3 p-3">
+            <div class="flex flex-col gap-3">
+                <Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0 space">
+                    <Control let:attrs>
+                        <Checkbox {...attrs} id="time-check" />
+                        <Label class="text-[1rem]" for="time-check">Time limit</Label>
+                    </Control>
+                </Field>
+                <Field {form} name="expiration_date" class="space-y-0">
                     <Control let:attrs>
                         <DatePicker {...attrs} bind:dateValue={$formData.expiration_date}/>
                     </Control>
@@ -84,7 +81,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="redirects_limit_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="visit-check" />
+                            <Checkbox {...attrs} id="visit-check" />
                             <Label class="text-[1rem]" for="visit-check">Visit limit</Label>
                         </Control>
                         <FieldErrors />
@@ -103,7 +100,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="short_id_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="custom-check" checked disabled/>
+                            <Checkbox {...attrs} id="custom-check" checked disabled/>
                             <Label class="text-[1rem]" for="custom-check">Custom link</Label>
                         </Control>
                         <FieldErrors />
@@ -120,7 +117,7 @@
                 <div class="flex items-center space-x-4">
                     <Field {form} name="stats_enabled">
                         <Control let:attrs>
-                            <Checkbox {...attrs} class="scale-125" id="stat-check" checked disabled/>
+                            <Checkbox {...attrs} id="stat-check" checked disabled/>
                             <Label class="text-[1rem]" for="stat-check">Collect statistics</Label>
                         </Control>
                         <FieldErrors />

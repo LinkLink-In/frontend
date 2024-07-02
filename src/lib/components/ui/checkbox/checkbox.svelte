@@ -14,7 +14,7 @@
 
 <CheckboxPrimitive.Root
 	class={cn(
-		"peer box-content h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled=true]:cursor-not-allowed data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[disabled=true]:opacity-50",
+		"peer box-content h-6 w-6 shrink-0 rounded-md border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled=true]:cursor-not-allowed data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[disabled=true]:opacity-50",
 		className
 	)}
 	bind:checked
@@ -22,14 +22,14 @@
 	{...$$restProps}
 >
 	<CheckboxPrimitive.Indicator
-		class={cn("flex h-4 w-4 items-center justify-center text-current")}
+		class={cn("flex h-6 w-6 items-center justify-center text-current")}
 		let:isChecked
 		let:isIndeterminate
 	>
 		{#if isIndeterminate}
-			<Minus class="h-3.5 w-3.5" />
+			<Minus class="h-5 w-5" />
 		{:else}
-			<Check class={cn("h-3.5 w-3.5", !isChecked && "hidden")} />
+			<Check class={cn("h-5 w-5", !isChecked && "hidden")} />
 		{/if}
 	</CheckboxPrimitive.Indicator>
 </CheckboxPrimitive.Root>
