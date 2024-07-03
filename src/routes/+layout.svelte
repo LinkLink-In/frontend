@@ -4,6 +4,19 @@
   import { loginStatus } from "$lib/stores/loginStatus";
   import { page } from "$app/stores";
   import "../app.css";
+  import { onMount } from "svelte";
+
+  function getCookieValue(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+
+  onMount(() => {
+    let myCookieValue = getCookieValue('access_token');
+    if (myCookieValue) { $loginStatus = true; }
+  });
 </script>
 
 <div class="flex flex-col w-screen min-h-screen">

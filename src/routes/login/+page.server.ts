@@ -32,7 +32,7 @@ export const actions: Actions = {
             return setError(form, 'password', 'Incorrect login or password');
         }
 
-        event.cookies.set('access_token', authResponse.access_token, { path: '/', sameSite: 'strict' })
+        event.cookies.set('access_token', authResponse.access_token, { path: '/', sameSite: 'strict', httpOnly: false })
 
         return {
             form

@@ -35,7 +35,7 @@ export const actions: Actions = {
                 "title": `${crypto.randomUUID().toString()}`,
                 "description": `${crypto.randomUUID().toString()}`
             }, token);
-            event.cookies.set("banner_id", bannerCreate.id, { path: '/', sameSite: 'strict' });
+            event.cookies.set("banner_id", bannerCreate.id, { path: '/', sameSite: 'strict', httpOnly: false });
         }
 
         const linkResponse: LinkRead = await createLink({
