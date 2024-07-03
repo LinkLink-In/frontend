@@ -59,7 +59,7 @@
             </Control>
             <FieldErrors />
         </Field>
-        <Button>Generate link</Button>
+        <Button type="">Generate link</Button>
     </div>
     <div class="flex items-center bg-[#FFFFFF] p-3 rounded-xl gap-3">
         <div class="flex flex-col gap-3 p-3 h-full">
