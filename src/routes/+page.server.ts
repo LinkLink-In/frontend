@@ -3,7 +3,7 @@ import {fail, redirect} from "@sveltejs/kit";
 import {superValidate, setError, type SuperValidated, type Infer} from "sveltekit-superforms";
 import {type FormSchema, formSchema} from "./schema";
 import { zod } from "sveltekit-superforms/adapters";
-import {createLink, type LinkRead} from "$lib/api/links";
+import {createLink, type LinkCreate, type LinkRead} from "$lib/api/links";
 import crypto from "crypto";
 import {type BannerRead, createBanner} from "$lib/api/banners";
 export interface LinkData extends SuperValidated<Infer<FormSchema>> {
@@ -37,16 +37,34 @@ export const actions: Actions = {
             }, token);
             event.cookies.set("banner_id", bannerCreate.id, { path: '/', sameSite: 'strict', httpOnly: false });
         }
-
-        const linkResponse: LinkRead | null = await createLink({
+        const linkRequest : LinkCreate = {
             "short_id": form.data.short_id,
             "redirect_url": form.data.redirect_url,
-            "expiration_date": form.data.expiration_date,
-            "redirects_limit": parseInt(form.data.redirects_limit),
-            "redirects_left": 100,
-            "passphrase_hash": "sdfkpfsdfkoskof",
-            "banner_id": event.cookies.get("banner_id")!
-        }, token);
+            "banner_id": event.cookies.get("banner_id")!,
+        }
+
+        if (form.data.expiration_date_enabled) {
+            if (!form.data.expiration_date) {
+                setError(form, 'expiration_date', 'Please specify the expiration date')
+                return fail(400, {
+                    form,
+                    url: null
+                })
+            }
+            linkRequest.expiration_date = form.data.expiration_date;
+        }
+        if (form.data.redirects_limit_enabled) {
+            if (!form.data.redirects_limit) {
+                setError(form, 'redirects_limit', 'Please specify the redirects limit')
+                return fail(400, {
+                    form,
+                    url: null
+                })
+            }
+            linkRequest.redirects_limit = parseInt(form.data.redirects_limit);
+        }
+
+        const linkResponse: LinkRead | null = await createLink(linkRequest, token);
 
         if (!linkResponse) {
             setError(form, 'short_id', 'This link already in use. Please specify other custom link')

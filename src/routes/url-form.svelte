@@ -66,13 +66,13 @@
             <div class="flex flex-col gap-3">
                 <Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
                     <Control let:attrs>
-                        <Checkbox {...attrs} id="time-check" checked disabled />
+                        <Checkbox {...attrs} id="time-check" bind:checked={$formData.expiration_date_enabled} />
                         <Label class="text-[1rem]" for="time-check">Time limit</Label>
                     </Control>
                 </Field>
                 <Field {form} name="expiration_date" class="space-y-0">
                     <Control let:attrs>
-                        <DatePicker {...attrs} bind:dateValue={$formData.expiration_date}/>
+                        <DatePicker {...attrs} disabled={!$formData.expiration_date_enabled} bind:dateValue={$formData.expiration_date}/>
                     </Control>
                     <FieldErrors />
                 </Field>
@@ -80,14 +80,14 @@
             <div class="flex flex-col gap-3">
                 <Field {form} name="redirects_limit_enabled" class="flex items-center gap-3 space-y-0">
                     <Control let:attrs>
-                        <Checkbox {...attrs} id="visit-check" checked disabled />
+                        <Checkbox {...attrs} id="visit-check" bind:checked={$formData.redirects_limit_enabled} />
                         <Label class="text-[1rem]" for="visit-check">Visit limit</Label>
                     </Control>
                     <FieldErrors />
                 </Field>
                 <Field {form} name="redirects_limit" class="space-y-0">
                     <Control let:attrs>
-                        <Input {...attrs} placeholder="100" startIcon="eye" type="number" bind:value={$formData.redirects_limit}></Input>
+                        <Input {...attrs} placeholder="100" startIcon="eye" type="number" disabled={!$formData.redirects_limit_enabled} bind:value={$formData.redirects_limit}></Input>
                     </Control>
                     <FieldErrors />
                 </Field>

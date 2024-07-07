@@ -1,10 +1,10 @@
 export interface LinkCreate {
     short_id: string,
     redirect_url: string,
-    expiration_date: string,
-    redirects_limit: number,
-    redirects_left: number,
-    passphrase_hash: string,
+    expiration_date?: string,
+    redirects_limit?: number,
+    redirects_left?: number,
+    passphrase_hash?: string,
     banner_id: string
 }
 
@@ -29,7 +29,7 @@ export async function createLink(data: LinkCreate, token: string): Promise<LinkR
             body: JSON.stringify(data)
         }).then(
             (r) => {
-                if (r.status === 500) resolve(null);
+                if (r.status === 418) resolve(null);
                 return r.json()
             }
         ).then((data: LinkRead) => {
