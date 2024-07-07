@@ -1,10 +1,10 @@
 export interface LinkCreate {
     short_id: string,
     redirect_url: string,
-    expiration_date: string,
-    redirects_limit: number,
-    redirects_left: number,
-    passphrase_hash: string,
+    expiration_date?: string,
+    redirects_limit?: number,
+    redirects_left?: number,
+    passphrase_hash?: string,
     banner_id: string
 }
 

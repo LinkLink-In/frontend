@@ -14,6 +14,7 @@
     dateStyle: "long"
   });
   export let dateValue;
+  export let disabled;
   let value: DateValue | undefined = undefined;
   $: {
     if (value) {
@@ -31,6 +32,7 @@
         "w-[280px] justify-start text-left font-normal",
         !value && "text-muted-foreground"
       )}
+      disabled={disabled}
       builders={[builder]}
     >
       <CalendarIcon class="mr-2 h-4 w-4" />
