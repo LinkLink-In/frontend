@@ -38,7 +38,7 @@ export const actions: Actions = {
             event.cookies.set("banner_id", bannerCreate.id, { path: '/', sameSite: 'strict', httpOnly: false });
         }
 
-        const linkResponse: LinkRead = await createLink({
+        const linkResponse: LinkRead | null = await createLink({
             "short_id": form.data.short_id,
             "redirect_url": form.data.redirect_url,
             "expiration_date": form.data.expiration_date,
@@ -48,6 +48,13 @@ export const actions: Actions = {
             "banner_id": event.cookies.get("banner_id")!
         }, token);
 
+        if (!linkResponse) {
+            setError(form, 'short_id', 'This link already in use. Please specify other custom link')
+            return fail(400, {
+                form,
+                url: null
+            })
+        }
         if (!linkResponse.owner_id) {
             setError(form, 'redirect_url', '')
             return fail(400, {

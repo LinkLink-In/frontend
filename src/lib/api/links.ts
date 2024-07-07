@@ -18,7 +18,7 @@ export interface LinkRead {
     banner_id: string;
     owner_id: string;
 }
-export async function createLink(data: LinkCreate, token: string): Promise<LinkRead> {
+export async function createLink(data: LinkCreate, token: string): Promise<LinkRead | null> {
     return new Promise((resolve) => {
         fetch(`${import.meta.env.VITE_API_HOST}/links/create`, {
             method: 'POST',
@@ -29,6 +29,7 @@ export async function createLink(data: LinkCreate, token: string): Promise<LinkR
             body: JSON.stringify(data)
         }).then(
             (r) => {
+                if (r.status === 500) resolve(null);
                 return r.json()
             }
         ).then((data: LinkRead) => {
