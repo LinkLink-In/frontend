@@ -66,7 +66,7 @@
             <div class="flex flex-col gap-3">
                 <Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
                     <Control let:attrs>
-                        <Checkbox {...attrs} id="time-check" />
+                        <Checkbox {...attrs} id="time-check" checked disabled />
                         <Label class="text-[1rem]" for="time-check">Time limit</Label>
                     </Control>
                 </Field>
@@ -80,7 +80,7 @@
             <div class="flex flex-col gap-3">
                 <Field {form} name="redirects_limit_enabled" class="flex items-center gap-3 space-y-0">
                     <Control let:attrs>
-                        <Checkbox {...attrs} id="visit-check" />
+                        <Checkbox {...attrs} id="visit-check" checked disabled />
                         <Label class="text-[1rem]" for="visit-check">Visit limit</Label>
                     </Control>
                     <FieldErrors />
