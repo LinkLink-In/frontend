@@ -4,6 +4,7 @@
   import { loginStatus } from "$lib/stores/loginStatus";
   import { page } from "$app/stores";
   import "../app.css";
+  import "@fortawesome/fontawesome-free/css/all.min.css";
   import { onMount } from "svelte";
 
   function getCookieValue(name) {
