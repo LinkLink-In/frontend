@@ -1,11 +1,28 @@
 <script lang="ts">
-    import Button from "$lib/components/ui/button/button.svelte";
-    import Switch from "$lib/components/ui/switch/switch.svelte";
     import { onMount } from "svelte";
     import type { PageData } from './$types';
     import { type RedirectCreate, createRedirect } from "$lib/api/redirects";
 
     export let data: PageData;
+
+    function getBrowserInfo(userAgent): string {
+        const browserMap = [
+            { name: 'Firefox', keywords: ['Firefox'] },
+            { name: 'Opera', keywords: ['Opera', 'OPR'] },
+            { name: 'Internet Explorer', keywords: ['Trident'] },
+            { name: 'Edge', keywords: ['Edge'] },
+            { name: 'Chrome', keywords: ['Chrome'] },
+            { name: 'Safari', keywords: ['Safari'] }
+        ];
+
+        for (const { name, keywords } of browserMap) {
+            if (keywords.some(keyword => userAgent.includes(keyword))) {
+                return name;
+            }
+        }
+
+        return 'Unknown';
+    }
 
     async function getIpAddress(): string {
         try {
@@ -19,31 +36,13 @@
         }
     }
 
-    function getBrowserInfo(userAgent): string {
-      const browserMap = [
-        { name: 'Firefox', keywords: ['Firefox'] },
-        { name: 'Opera', keywords: ['Opera', 'OPR'] },
-        { name: 'Internet Explorer', keywords: ['Trident'] },
-        { name: 'Edge', keywords: ['Edge'] },
-        { name: 'Chrome', keywords: ['Chrome'] },
-        { name: 'Safari', keywords: ['Safari'] }
-      ];
 
-      for (const { name, keywords } of browserMap) {
-        if (keywords.some(keyword => userAgent.includes(keyword))) {
-          return name;
-        }
-      }
-
-      return 'Unknown';
-    }
 
     async function sendRedirectData() {
         const current_ip = await getIpAddress();
-        const new_id = window.crypto.randomUUID();
         const browser_name = getBrowserInfo(navigator.userAgent);
 
-        const newRedirect: LinkCreate = {
+        const newRedirect: RedirectCreate = {
             link_id: data.link_id,
             ip: current_ip,
             user_agent: navigator.userAgent,
@@ -53,21 +52,21 @@
             language: navigator.language
         };
 
-        const token = event.cookies.get('access_token');
-
-        await createRedirect(newRedirect, token);
+        await createRedirect(newRedirect);
     }
 
     onMount(() => {
-        sendRedirectData();
-        setTimeout(() => {
-            window.location.href = data.redirect_url;
-        }, 2000);
+        if (data.detail === null) {
+            setTimeout(() => {
+                window.location.href = data.redirect_url;
+            }, 2000);
+        }
     })
 </script>
 
 <div class="w-full min-h-full flex flex-col">
     <div class="flex justify-center w-full flex-col flex-grow items-center">
+        {#if data.detail === null}
         <div class="flex flex-col items-center w-[50rem] gap-2">
             <div class="flex flex-col gap-3 items-center">
                 <div class="flex flex-col gap-1">
@@ -95,8 +94,22 @@
                 </div>
             </div>
             <p class="text-center opacity-50 font-medium">
-                Paid advertisement. Want to remove this banner? <br>Upgrade to <a href="/pro" class="underline">LinkLink Pro</a>.
+                Paid advertisement. Want to remove this banner? <br />Upgrade to <a href="/pro" class="underline">LinkLink Pro</a>.
             </p>
         </div>
+        {:else}
+            <div class="flex flex-col items-center w-[50rem] gap-2">
+                <div class="flex flex-col gap-16 items-center justify-center">
+                    <i class="fa-solid fa-low-vision scale-[6] text-black/50"></i>
+                    <div class="flex flex-col gap-1">
+                        <h1 class="font-semibold text-center text-3xl">Invalid link</h1>
+                        <p class="text-2xl font-semibold opacity-75">{data.detail}</p>
+                    </div>
+                </div>
+                <p class="text-center opacity-50 font-medium">
+                    If you believe that it is a mistake, contact the link owner.
+                </p>
+            </div>
+        {/if}
     </div>
 </div>

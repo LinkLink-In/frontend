@@ -8,15 +8,16 @@ export interface RedirectCreate {
   language: string
 }
 
-export async function createRedirect(data: RedirectCreate, token: string) {
+export async function createRedirect(data: RedirectCreate) {
     return new Promise((resolve) => {
         fetch(`${import.meta.env.VITE_API_HOST}/redirects/create`, {
             method: 'POST',
             headers:{
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
+        }).then((res) => {
+            return res;
         }).catch((e) => {
             console.log("Error while creating redirect:", e);
         })
