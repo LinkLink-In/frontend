@@ -19,7 +19,6 @@ export async function createRedirect(data: RedirectCreate) {
         }).then((res) => {
             return res;
         }).catch((e) => {
-            console.log(e);
             console.log("Error while creating redirect:", e);
         })
     })
