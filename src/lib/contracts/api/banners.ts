@@ -34,8 +34,8 @@ export const bannersContract = c.router(
 			}
 		},
 		createBanner: {
-			method: 'POST',
-			path: '/create',
+			method: 'PUT',
+			path: '/',
 			headers: authHeader,
 			body: z.object({
 				title: z.string(),
@@ -48,8 +48,12 @@ export const bannersContract = c.router(
 		},
 		listBanners: {
 			method: 'GET',
-			path: '/list/',
+			path: '/',
 			headers: authHeader,
+			query: z.object({
+				offset: z.number().optional(),
+				limit: z.number().optional()
+			}),
 			responses: {
 				200: z.array(BannerRead),
 				422: ObjAny
