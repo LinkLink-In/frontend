@@ -1,5 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
+import { authHeader } from '$lib/contracts';
 
 const c = initContract();
 export const usersContract = c.router(
@@ -7,6 +8,7 @@ export const usersContract = c.router(
 		me: {
 			method: 'GET',
 			path: '/me',
+			headers: authHeader,
 			responses: {
 				200: z.object({
 					id: z.string(),
