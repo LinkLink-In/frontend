@@ -1,9 +1,9 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
+import { authHeader, ObjAny } from '../index';
 
 const c = initContract();
 
-const ObjAny = z.object({}).passthrough();
 export const authContract = c.router(
 	{
 		login: {
@@ -28,6 +28,7 @@ export const authContract = c.router(
 		logout: {
 			method: 'POST',
 			path: '/logout',
+			headers: authHeader,
 			body: z.any().optional(),
 			responses: {
 				200: z.string(),
