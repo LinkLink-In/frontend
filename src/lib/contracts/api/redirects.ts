@@ -18,8 +18,8 @@ export const redirectsContract = c.router(
 			}
 		},
 		createRedirect: {
-			method: 'POST',
-			path: '/create',
+			method: 'PUT',
+			path: '/',
 			headers: authHeader,
 			body: RedirectCreate,
 			responses: {
@@ -29,9 +29,11 @@ export const redirectsContract = c.router(
 		},
 		listRedirects: {
 			method: 'GET',
-			path: '/list/:short_id',
-			pathParams: z.object({
-				short_id: z.string()
+			path: '/',
+			query: z.object({
+				link_id: z.string(),
+				offset: z.number().optional(),
+				limit: z.number().optional()
 			}),
 			headers: authHeader,
 			responses: {
