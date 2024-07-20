@@ -3,6 +3,7 @@
 	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils.js';
 
+	const { Day } = CalendarPrimitive;
 	type $$Props = CalendarPrimitive.DayProps;
 	type $$Events = CalendarPrimitive.DayEvents;
 
@@ -12,7 +13,7 @@
 	export { className as class };
 </script>
 
-<CalendarPrimitive.Day
+<Day
 	on:click
 	{date}
 	{month}
@@ -40,4 +41,4 @@
 	<slot {selected} {disabled} {unavailable} {builder}>
 		{date.day}
 	</slot>
-</CalendarPrimitive.Day>
+</Day>

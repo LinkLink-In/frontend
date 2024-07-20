@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
 	import type { FormPath, SuperForm } from 'sveltekit-superforms';
+
 	type T = Record<string, unknown>;
 	type U = FormPath<T>;
 </script>
@@ -8,6 +9,7 @@
 	import * as FormPrimitive from 'formsnap';
 	import { cn } from '$lib/utils.js';
 
+	const { Fieldset } = FormPrimitive;
 	type $$Props = FormPrimitive.FieldsetProps<T, U>;
 
 	export let form: SuperForm<T>;
@@ -17,7 +19,7 @@
 	export { className as class };
 </script>
 
-<FormPrimitive.Fieldset
+<Fieldset
 	{form}
 	{name}
 	let:constraints
@@ -27,4 +29,4 @@
 	class={cn('space-y-2', className)}
 >
 	<slot {constraints} {errors} {tainted} {value} />
-</FormPrimitive.Fieldset>
+</Fieldset>

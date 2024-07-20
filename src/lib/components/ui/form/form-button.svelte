@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Button from '$lib/components/ui/button/index.js';
 
+	const { Root } = Button;
 	type $$Props = Button.Props;
 	type $$Events = Button.Events;
 </script>

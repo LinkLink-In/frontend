@@ -4,6 +4,8 @@
 	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils.js';
 
+	const { NextButton } = CalendarPrimitive;
+
 	type $$Props = CalendarPrimitive.NextButtonProps;
 	type $$Events = CalendarPrimitive.NextButtonEvents;
 
@@ -11,7 +13,7 @@
 	export { className as class };
 </script>
 
-<CalendarPrimitive.NextButton
+<NextButton
 	on:click
 	class={cn(
 		buttonVariants({ variant: 'outline' }),
@@ -24,4 +26,4 @@
 	<slot {builder}>
 		<ChevronRight class="h-4 w-4" />
 	</slot>
-</CalendarPrimitive.NextButton>
+</NextButton>
