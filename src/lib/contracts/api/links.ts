@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { authHeader, LinkRead, ObjAny } from '$lib/contracts';
+import { authHeader, LinkCreate, LinkRead, ObjAny } from '../index';
 
 const c = initContract();
 export const linksContract = c.router(
@@ -25,44 +25,67 @@ export const linksContract = c.router(
 			}),
 			responses: {
 				200: z.object({
+					short_id: z.string(),
 					redirect_url: z.string(),
-					redirects_left: z.number()
+					banner_id: z.string()
 				}),
 				422: ObjAny
 			}
 		},
 		updateLink: {
-			method: 'PUT',
+			method: 'PATCH',
 			path: '/:short_id',
 			pathParams: z.object({
 				short_id: z.string()
 			}),
 			headers: authHeader,
 			body: z.object({
-				short_id: z.string(),
-				redirect_url: z.string(),
-				expiration_date: z.string().optional(),
-				redirects_limit: z.number().optional(),
-				passphrase_hash: z.string().optional(),
-				banner_id: z.string(),
-				redirects_left: z.number().optional()
+				passphrase: z.string(),
+				banner_id: z.string()
 			}),
 			responses: {
 				200: LinkRead,
 				422: ObjAny
 			}
 		},
-		createLink: {
-			method: 'POST',
-			path: '/create',
-			body: z.object({
-				short_id: z.string(),
-				redirect_url: z.string(),
-				expiration_date: z.string().optional(),
-				redirects_limit: z.number().optional(),
-				passphrase_hash: z.string().optional(),
-				banner_id: z.string()
+		deleteLink: {
+			method: 'DELETE',
+			path: '/:short_id',
+			pathParams: z.object({
+				short_id: z.string()
 			}),
+			body: z.any().optional(),
+			headers: authHeader,
+			responses: {
+				200: z.string(),
+				422: ObjAny
+			}
+		},
+		checkPassphrase: {
+			method: 'POST',
+			path: '/:short_id/check',
+			pathParams: z.object({
+				short_id: z.string()
+			}),
+			body: z.object({
+				passphrase: z.string()
+			}),
+			headers: authHeader,
+			responses: {
+				200: z
+					.object({
+						short_id: z.string(),
+						redirect_url: z.string(),
+						banner_id: z.string()
+					})
+					.passthrough(),
+				422: ObjAny
+			}
+		},
+		createLink: {
+			method: 'PUT',
+			path: '/',
+			body: LinkCreate,
 			headers: authHeader,
 			responses: {
 				200: LinkRead,
@@ -71,8 +94,12 @@ export const linksContract = c.router(
 		},
 		listLinks: {
 			method: 'GET',
-			path: '/list/all',
+			path: '/',
 			headers: authHeader,
+			query: z.object({
+				offset: z.number().optional(),
+				limit: z.number().optional()
+			}),
 			responses: {
 				200: z.array(LinkRead),
 				422: ObjAny

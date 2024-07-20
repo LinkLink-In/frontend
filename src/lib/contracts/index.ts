@@ -19,14 +19,20 @@ export const ObjAny = z.object({}).passthrough();
 export const authHeader = z.object({
 	Authorization: z.string().startsWith('Bearer ')
 });
+
+export const LinkCreate = z.object({
+	redirect_url: z.string(),
+	expiration_date: z.string(),
+	redirects_limit: z.number(),
+	banner_id: z.string(),
+	passphrase: z.string()
+});
 export const LinkRead = z.object({
 	short_id: z.string(),
 	redirect_url: z.string(),
-	expiration_date: z.string().optional(),
-	redirects_limit: z.number().optional(),
-	passphrase_hash: z.string().optional(),
+	expiration_date: z.string(),
+	redirects_limit: z.number(),
 	banner_id: z.string(),
-	owner_id: z.string(),
 	redirects_left: z.number()
 });
 
