@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { type RedirectCreate, createRedirect } from '$lib/api/redirects';
 	import { sendRedirectData } from '$lib/helpers/browserData';
+
 	export let data: RedirectPageData;
+
 	interface RedirectPageData {
 		link_id: string;
 		redirect_url: string;
 		detail: string | null;
 	}
 
-	// sendRedirectData();
-
 	onMount(() => {
 		if (data.detail === null) {
+			sendRedirectData(data.link_id);
 			setTimeout(() => {
 				window.location.href = data.redirect_url;
 			}, 2000);
