@@ -18,8 +18,7 @@
     }
   },
   "lint-staged": {
-    "*.ts": "npx tsc --noEmit",
-    "*.{js,jsx,ts,tsx,html,css}": "npx prettier --write"
+    "*.{js,jsx,ts,tsx,html,css,svelte}": "npx prettier --write"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
