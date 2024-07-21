@@ -22,6 +22,7 @@ export const authHeader = z.object({
 
 export const LinkCreate = z.object({
 	redirect_url: z.string(),
+	short_id: z.union([z.string(), z.null()]),
 	expiration_date: z.union([z.string(), z.null()]),
 	redirects_limit: z.union([z.number(), z.null()]),
 	banner_id: z.union([z.string(), z.null()]),
