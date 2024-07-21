@@ -34,7 +34,7 @@
 					{...attrs}
 					placeholder="username@example.com"
 					bind:value={$formData.email}
-					class="border-2"
+					class="border-2 dark:bg-[#1E1F27] dark:text-[#FFF]"
 				/>
 			</Control>
 			<FieldErrors />
@@ -50,7 +50,7 @@
 					placeholder="••••••••••••"
 					type="password"
 					bind:value={$formData.password}
-					class="border-2"
+					class="border-2 dark:bg-[#1E1F27] dark:text-[#FFF]"
 				/>
 			</Control>
 			<FieldErrors />

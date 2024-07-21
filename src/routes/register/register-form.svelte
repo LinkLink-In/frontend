@@ -20,14 +20,24 @@
 		<Field {form} name="name">
 			<Control let:attrs>
 				<Label>Username</Label>
-				<Input {...attrs} placeholder="Ivan" bind:value={$formData.name} />
+				<Input
+					{...attrs}
+					placeholder="Ivan"
+					bind:value={$formData.name}
+					class="border-2 dark:bg-[#1E1F27] dark:text-[#FFF]"
+				/>
 			</Control>
 			<FieldErrors />
 		</Field>
 		<Field {form} name="email">
 			<Control let:attrs>
 				<Label>Email</Label>
-				<Input {...attrs} placeholder="username@example.com" bind:value={$formData.email} />
+				<Input
+					{...attrs}
+					placeholder="username@example.com"
+					bind:value={$formData.email}
+					class="border-2 dark:bg-[#1E1F27] dark:text-[#FFF]"
+				/>
 			</Control>
 			<FieldErrors />
 		</Field>
@@ -39,6 +49,7 @@
 					placeholder="••••••••••••"
 					type="password"
 					bind:value={$formData.password}
+					class="border-2 dark:bg-[#1E1F27] dark:text-[#FFF]"
 				/>
 			</Control>
 			<FieldErrors />
@@ -51,6 +62,7 @@
 					placeholder="••••••••••••"
 					type="password"
 					bind:value={$formData.password_repeat}
+					class="border-2 dark:bg-[#1E1F27] dark:text-[#FFF]"
 				/>
 			</Control>
 			<FieldErrors />

@@ -7,6 +7,7 @@
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import { onMount } from 'svelte';
 	import { darkMode } from '$lib/stores/dark_mode.ts';
+	import { browser } from '$app/environment';
 
 	function getCookieValue(name) {
 		const value = `; ${document.cookie}`;
@@ -22,7 +23,10 @@
 	});
 
 	let dark_theme_check = true;
-	$: $darkMode = dark_theme_check;
+	$: {
+		if (browser) document.getElementsByTagName('html')[0].classList.add('dark');
+		$darkMode = dark_theme_check;
+	}
 </script>
 
 <div class="flex min-h-screen w-screen flex-col" class:dark={dark_theme_check}>

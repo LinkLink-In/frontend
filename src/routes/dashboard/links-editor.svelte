@@ -57,6 +57,7 @@
 					id="redirect_url"
 					placeholder="https://example.com/some-very-long-link..."
 					type="url"
+					class="dark:bg-[#1E1F27]"
 					value={chosenLink.redirect_url}
 					disabled
 				/>
@@ -79,6 +80,7 @@
 						startIcon="link"
 						id="short_id_input"
 						value={chosenLink.short_id}
+						class="dark:bg-[#1E1F27]"
 						disabled
 					></Input>
 				</Control>
@@ -127,6 +129,7 @@
 							{...attrs}
 							startIcon="eye"
 							type="string"
+							class="dark:bg-[#1E1F27] dark:text-[#FFFFFF]"
 							disabled
 							value={chosenLink.redirects_limit !== null ? chosenLink.redirects_limit : 'unlimited'}
 						></Input>
@@ -151,6 +154,7 @@
 						startIcon="lock"
 						type="password"
 						bind:value={$formData.passphrase}
+						class="dark:bg-[#1E1F27] dark:text-[#FFFFFF]"
 						disabled={!$formData.passphrase_enabled}
 					></Input>
 				</Control>
@@ -171,6 +175,7 @@
 						startIcon="rectangle-ad"
 						id="banner_id_input"
 						bind:value={$formData.banner_id}
+						class="dark:bg-[#1E1F27] dark:text-[#FFFFFF]"
 						disabled={!$formData.banner_id_enabled}
 					></Input>
 				</Control>

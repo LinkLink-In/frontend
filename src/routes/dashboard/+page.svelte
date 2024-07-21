@@ -20,15 +20,15 @@
 		<div class="flex w-full flex-grow flex-col items-center justify-center">
 			<div class="flex w-[70rem] flex-col gap-3">
 				<div class="flex flex-col gap-6">
-					<h1 class="text-3xl font-semibold">Your links</h1>
-					<UrlForm data={data.urlForm} isPropsHorizontal={true} action="?/createLink" />
+					<h1 class="text-3xl font-semibold dark:text-[#FFFFFF]">Your links</h1>
+					<UrlForm data={data.urlForm} isPropsHorizonal={true} action="?/createLink" />
 				</div>
 				<Table bind:data={data.links} bind:chosenLink={data.chosenLink} />
 			</div>
 		</div>
 	</div>
 	{#if data.chosenLink.action === 'edit'}
-		<Sheet.Content class="flex flex-col gap-6">
+		<Sheet.Content class="flex flex-col gap-6" style="--popover: 0 50% 0%;">
 			<Sheet.Header>
 				<Sheet.Title class="text-3xl font-semibold">Edit link</Sheet.Title>
 				<Sheet.Description>

@@ -126,10 +126,15 @@
 
 <div>
 	<div class="flex items-center py-4">
-		<Input class="max-w-sm" placeholder="Filter links..." type="text" bind:value={$filterValue} />
+		<Input
+			class="max-w-sm dark:bg-[#1E1F27] dark:text-[#FFFFFF]"
+			placeholder="Filter links..."
+			type="text"
+			bind:value={$filterValue}
+		/>
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
-				<Button variant="outline" class="ml-auto" builders={[builder]}>
+				<Button variant="outline" class="ml-auto dark:text-[#FFFFFF]" builders={[builder]}>
 					Columns <ChevronDown class="ml-2 h-4 w-4" />
 				</Button>
 			</DropdownMenu.Trigger>
@@ -149,7 +154,7 @@
 			<Header>
 				{#each $headerRows as headerRow}
 					<Subscribe rowAttrs={headerRow.attrs()}>
-						<Row>
+						<Row class="dark:bg-[#1E1F27]">
 							{#each headerRow.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 									<Head {...attrs}>
@@ -176,7 +181,7 @@
 			<Body {...$tableBodyAttrs}>
 				{#each $pageRows as row (row.id)}
 					<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-						<Row {...rowAttrs}>
+						<Row {...rowAttrs} class="dark:bg-[#1E1F27] dark:text-[#FFFFFF]">
 							{#each row.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Cell {...attrs}>
