@@ -28,7 +28,8 @@
 	let dark_theme_check = false;
 	$: {
 		if (browser)
-			if (!$darkMode) document.getElementsByTagName('html')[0].classList.add('dark');
+			if (!$darkMode && dark_theme_check)
+				document.getElementsByTagName('html')[0].classList.add('dark');
 			else document.getElementsByTagName('html')[0].classList.remove('dark');
 		$darkMode = dark_theme_check;
 	}
