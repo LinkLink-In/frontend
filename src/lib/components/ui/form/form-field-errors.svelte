@@ -2,7 +2,6 @@
 	import * as FormPrimitive from 'formsnap';
 	import { cn } from '$lib/utils.js';
 
-	const { FieldErrors } = FormPrimitive;
 	type $$Props = FormPrimitive.FieldErrorsProps & {
 		errorClasses?: string | undefined | null;
 	};
@@ -12,7 +11,7 @@
 	export let errorClasses: $$Props['class'] = undefined;
 </script>
 
-<FieldErrors
+<FormPrimitive.FieldErrors
 	class={cn('text-[0.8rem] font-medium text-destructive', className)}
 	{...$$restProps}
 	let:errors
@@ -24,4 +23,4 @@
 			<div {...errorAttrs} class={cn(errorClasses)}>{error}</div>
 		{/each}
 	</slot>
-</FieldErrors>
+</FormPrimitive.FieldErrors>

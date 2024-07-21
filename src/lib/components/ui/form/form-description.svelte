@@ -2,16 +2,15 @@
 	import * as FormPrimitive from 'formsnap';
 	import { cn } from '$lib/utils.js';
 
-	const { Description } = FormPrimitive;
 	type $$Props = FormPrimitive.DescriptionProps;
 	let className: $$Props['class'] = undefined;
 	export { className as class };
 </script>
 
-<Description
+<FormPrimitive.Description
 	class={cn('text-[0.8rem] text-muted-foreground', className)}
 	{...$$restProps}
 	let:descriptionAttrs
 >
 	<slot {descriptionAttrs} />
-</Description>
+</FormPrimitive.Description>

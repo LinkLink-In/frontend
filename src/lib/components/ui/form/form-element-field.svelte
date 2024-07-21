@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
 	import type { FormPathLeaves, SuperForm } from 'sveltekit-superforms';
-
 	type T = Record<string, unknown>;
 	type U = FormPathLeaves<T>;
 </script>
@@ -9,8 +8,6 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import * as FormPrimitive from 'formsnap';
 	import { cn } from '$lib/utils.js';
-
-	const { ElementField } = FormPrimitive;
 
 	type $$Props = FormPrimitive.ElementFieldProps<T, U> & HTMLAttributes<HTMLDivElement>;
 
@@ -21,8 +18,8 @@
 	export { className as class };
 </script>
 
-<ElementField {form} {name} let:constraints let:errors let:tainted let:value>
+<FormPrimitive.ElementField {form} {name} let:constraints let:errors let:tainted let:value>
 	<div class={cn('space-y-2', className)}>
 		<slot {constraints} {errors} {tainted} {value} />
 	</div>
-</ElementField>
+</FormPrimitive.ElementField>

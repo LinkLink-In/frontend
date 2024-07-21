@@ -2,7 +2,6 @@
 	import { Popover as PopoverPrimitive } from 'bits-ui';
 	import { cn, flyAndScale } from '$lib/utils.js';
 
-	const { Content } = PopoverPrimitive;
 	type $$Props = PopoverPrimitive.ContentProps;
 
 	let className: $$Props['class'] = undefined;
@@ -13,7 +12,7 @@
 	export { className as class };
 </script>
 
-<Content
+<PopoverPrimitive.Content
 	{transition}
 	{transitionConfig}
 	{align}
@@ -25,4 +24,4 @@
 	)}
 >
 	<slot />
-</Content>
+</PopoverPrimitive.Content>

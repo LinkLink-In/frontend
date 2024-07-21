@@ -4,8 +4,6 @@
 	import Minus from 'svelte-radix/Minus.svelte';
 	import { cn } from '$lib/utils.js';
 
-	const { Root, Indicator } = CheckboxPrimitive;
-
 	type $$Props = CheckboxPrimitive.Props;
 	type $$Events = CheckboxPrimitive.Events;
 
@@ -14,7 +12,7 @@
 	export { className as class };
 </script>
 
-<Root
+<CheckboxPrimitive.Root
 	class={cn(
 		'peer box-content h-6 w-6 shrink-0 rounded-md border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled=true]:cursor-not-allowed data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[disabled=true]:opacity-50',
 		className
@@ -23,7 +21,7 @@
 	on:click
 	{...$$restProps}
 >
-	<Indicator
+	<CheckboxPrimitive.Indicator
 		class={cn('text-current flex h-6 w-6 items-center justify-center')}
 		let:isChecked
 		let:isIndeterminate
@@ -33,5 +31,5 @@
 		{:else}
 			<Check class={cn('h-5 w-5', !isChecked && 'hidden')} />
 		{/if}
-	</Indicator>
-</Root>
+	</CheckboxPrimitive.Indicator>
+</CheckboxPrimitive.Root>
