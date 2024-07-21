@@ -8,6 +8,7 @@
 
 	let className: $$Props['class'] = undefined;
 	export let value: $$Props['value'] = undefined;
+	export let disabled: $$Props['disabled'] = undefined;
 	export { className as class };
 
 	// Workaround for https://github.com/sveltejs/svelte/issues/9305
@@ -19,8 +20,8 @@
 </script>
 
 <div class="relative flex w-full items-center">
-	<div class="absolute left-1.5 top-1/2 ml-1 -translate-y-1/2 transform">
-		<i class={`fa-solid fa-${startIcon} opacity-50`}></i>
+	<div class="absolute left-1.5 top-1/2 ml-1 -translate-y-1/2 transform disabled:opacity-25">
+		<i class={`fa-solid fa-${startIcon} ${disabled ? 'opacity-25' : 'opacity-50'}`}></i>
 	</div>
 	<input
 		class={cn(
@@ -31,6 +32,7 @@
 		)}
 		bind:value
 		{readonly}
+		{disabled}
 		on:blur
 		on:change
 		on:click
