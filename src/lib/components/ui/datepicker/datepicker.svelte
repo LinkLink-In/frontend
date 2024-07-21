@@ -20,8 +20,8 @@
 	let value: DateValue | undefined = undefined;
 	$: {
 		if (value) {
-			let date = new Date(value!.year, value!.month, value!.day);
-			dateValue = date.toISOString();
+			const toSetValue = value.toDate('Europe/Moscow');
+			dateValue = toSetValue.toISOString();
 		}
 	}
 </script>
@@ -35,10 +35,10 @@
 			builders={[builder]}
 		>
 			<CalendarIcon class="mr-2 h-4 w-4" />
-			{value ? df.format(value.toDate(getLocalTimeZone())) : 'Pick a date'}
+			{value ? df.format(value.toDate('Europe/Moscow')) : 'Pick a date'}
 		</Button>
 	</Trigger>
 	<Content class="w-auto p-0">
-		<Calendar minValue={today(getLocalTimeZone()).add({ days: 1 })} bind:value initialFocus />
+		<Calendar minValue={today('Europe/Moscow').add({ days: 1 })} bind:value initialFocus />
 	</Content>
 </Root>
