@@ -99,6 +99,7 @@ export const actions: Actions = {
 			})
 			.then((res) => {
 				if (res.status === 200) return res.body;
+				if (res.status === 400) return res.body.detail;
 				if (res.status === 401) redirect(302, '/login');
 				else {
 					console.log(res);
@@ -106,24 +107,37 @@ export const actions: Actions = {
 				}
 			});
 
-		if (!linkResponse) {
-			setError(form, 'short_id', 'This link already in use. Please specify other custom link');
+		if (typeof linkResponse === 'string') {
+			setError(form, 'short_id', linkResponse);
 			return fail(400, {
 				form,
 				url: null
 			});
-		}
-		if (!linkResponse.short_id) {
-			setError(form, 'redirect_url', 'Failed to create the link. Try again');
-			return fail(400, {
-				form,
-				url: null
-			});
-		}
+		} else {
+			if (!linkResponse) {
+				setError(
+					form,
+					'redirect_url',
+					'Unknown error occurred while trying to create a link. Please, try again'
+				);
+				return fail(400, {
+					form,
+					url: null
+				});
+			}
 
-		return {
-			form,
-			url: linkResponse.short_id
-		};
+			if (!linkResponse.short_id) {
+				setError(form, 'redirect_url', 'Failed to create the link. Try again');
+				return fail(400, {
+					form,
+					url: null
+				});
+			}
+
+			return {
+				form,
+				url: linkResponse.short_id
+			};
+		}
 	}
 };

@@ -89,6 +89,9 @@ export const linksContract = c.router(
 			headers: authHeader,
 			responses: {
 				200: LinkRead,
+				400: z.object({
+					detail: z.string()
+				}),
 				422: ObjAny
 			}
 		},
