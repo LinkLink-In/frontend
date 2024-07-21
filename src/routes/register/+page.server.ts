@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
-import { type UserRead, userRegister } from '$lib/api/auth';
+import { client } from '$lib/client';
 
 export const load = async () => {
 	return {
@@ -18,13 +18,27 @@ export const actions = {
 				form
 			});
 		}
-		const registerResponse: UserRead = await userRegister(
-			form.data.name,
-			form.data.email,
-			form.data.password
-		);
-		if (!registerResponse.id) {
-			switch (registerResponse.detail) {
+		const registerResponse = await client.auth
+			.register({
+				body: {
+					name: form.data.name,
+					email: form.data.email,
+					password: form.data.password
+				}
+			})
+			.then((res) => {
+				if (res.status === 201) {
+					return res.body;
+				} else if (res.status === 400) {
+					return res.body.detail;
+				} else {
+					console.log(res, res.body);
+					return 'Unknown error';
+				}
+			});
+
+		if (typeof registerResponse === 'string') {
+			switch (registerResponse) {
 				case 'REGISTER_USER_ALREADY_EXISTS':
 					return setError(form, 'email', 'This email already registered');
 				default:

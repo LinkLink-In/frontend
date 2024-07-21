@@ -5,7 +5,7 @@
 	export let data;
 </script>
 
-<div class="main dark:text-[#FFFFFF]">
+<div class="main">
 	<div class="form-wrapper">
 		<RegisterForm data={data.form} />
 	</div>

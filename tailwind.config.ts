@@ -7,6 +7,46 @@ const config: Config = {
 	safelist: ['dark'],
 	theme: {
 		colors: {
+			light: {
+				surface: {
+					main: '#FBF8FF',
+					container: '#EEECF8',
+					'container-low': '#F4F2FE',
+					'container-high': '#E9E7F3',
+					'container-highest': '#E3E1ED',
+					on: '#1A1B23'
+				},
+				primary: {
+					main: '#394ED9',
+					secondary: '#A1A3FC',
+					'secondary-on': '#030668'
+				},
+				outline: '#A1A3FC',
+				error: {
+					container: '#FFDAD6',
+					main: '#BA1A1A'
+				}
+			},
+			dark: {
+				surface: {
+					main: '#12131B',
+					container: '#1E1F27',
+					'container-low': '#1A1B23',
+					'container-high': '#292932',
+					'container-highest': '#34343D',
+					on: '#E3E1ED'
+				},
+				primary: {
+					main: '#263BC5',
+					secondary: '#343C72',
+					'secondary-on': '#A1A3FC'
+				},
+				outline: '#343C72',
+				error: {
+					container: '#690005',
+					main: '#FFB4AB'
+				}
+			},
 			black: '#1A1B32',
 			blue: '#394ED9',
 			purple: '#A1A3FC',

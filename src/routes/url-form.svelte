@@ -12,6 +12,9 @@
 	let endIconVal;
 	let current_url;
 
+	export let isPropsHorizontal = false;
+	export let action = undefined;
+
 	const form = superForm(data, {
 		validators: zodClient(formSchema),
 		dataType: 'json',
@@ -51,7 +54,7 @@
 	}
 </script>
 
-<form method="POST" use:enhance class="flex w-full flex-col gap-3 dark:text-[#FFFFFF]">
+<form method="POST" action={action ? action : ''} use:enhance class="flex w-full flex-col gap-3">
 	<div class="flex gap-4">
 		<Field {form} name="redirect_url" class="w-full space-y-0">
 			<Control let:attrs class="w-full">
@@ -59,7 +62,6 @@
 					{...attrs}
 					placeholder="https://example.com/some-very-long-link..."
 					type="url"
-					class="dark:bg-[#1E1F27]"
 					bind:value={$formData.redirect_url}
 					endIconHandler={handleCopy}
 					bind:endIcon={endIconVal}
@@ -69,8 +71,8 @@
 		</Field>
 		<Button type="">Generate link</Button>
 	</div>
-	<div class="flex items-center gap-3 rounded-xl bg-[#FFFFFF] p-3 dark:bg-[#1E1F27]">
-		<div class="flex h-full flex-col gap-3 p-3">
+	<div class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3`}>
+		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -84,6 +86,8 @@
 							{...attrs}
 							disabled={!$formData.expiration_date_enabled}
 							bind:dateValue={$formData.expiration_date}
+							className={isPropsHorizontal ? 'w-[10rem]' : ''}
+							placeholder="Pick a date"
 						/>
 					</Control>
 					<FieldErrors />
@@ -107,21 +111,23 @@
 							{...attrs}
 							placeholder="100"
 							startIcon="eye"
-							class="dark:bg-[#1E1F27]"
+							type="number"
+							min="1"
 							disabled={!$formData.redirects_limit_enabled}
 							bind:value={$formData.redirects_limit}
+							className={isPropsHorizontal ? 'w-[10rem]' : ''}
 						></Input>
 					</Control>
 					<FieldErrors />
 				</Field>
 			</div>
 		</div>
-		<div class="flex h-full flex-col gap-3 p-3">
+		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
-						<Checkbox {...attrs} id="custom-check" checked disabled />
-						<Label class="text-[1rem]" for="custom-check">Custom link</Label>
+						<Checkbox {...attrs} id="shortid-check" bind:checked={$formData.short_id_enabled} />
+						<Label class="text-[1rem]" for="shortid-check">Custom link</Label>
 					</Control>
 					<FieldErrors />
 				</Field>
@@ -131,24 +137,12 @@
 							{...attrs}
 							placeholder="anijakich"
 							startIcon="link"
-							class="dark:bg-[#1E1F27]"
+							disabled={!$formData.short_id_enabled}
 							bind:value={$formData.short_id}
 						></Input>
 					</Control>
 					<FieldErrors />
 				</Field>
-			</div>
-			<div class="flex flex-col gap-3">
-				<Field {form} name="stats_enabled" class="flex items-center gap-3 space-y-0">
-					<Control let:attrs>
-						<Checkbox {...attrs} id="stat-check" checked disabled />
-						<Label class="text-[1rem]" for="stat-check">Collect statistics</Label>
-					</Control>
-					<FieldErrors />
-				</Field>
-				<div class="text-sm">
-					Login into your account to collect statistics  and info about visitors.
-				</div>
 			</div>
 		</div>
 	</div>

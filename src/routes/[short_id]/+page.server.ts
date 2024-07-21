@@ -1,31 +1,29 @@
 import type { PageServerLoad } from './$types';
-import type { LinkRead } from '$lib/api/links';
+import { client } from '$lib/client';
 
-export interface RedirectCreate {
-	link_id: string;
-	ip: string;
-	user_agent: string;
-	referrer: string;
-	browser: string;
-	platform: string;
-	language: string;
-}
-
-export const load: PageServerLoad = async ({ params, getClientAddress, request }) => {
-	let requested_link: Response = await fetch(
-		`${import.meta.env.VITE_API_HOST}/links/${params.short_id}`
-	);
-	requested_link = await requested_link.json();
-	if (!requested_link.short_id) {
+export const load: PageServerLoad = async ({ params }) => {
+	const redirect_link = await client.links
+		.getLinkUnauthorized({
+			params: { short_id: params.short_id }
+		})
+		.then((res) => {
+			if (res.status === 200) {
+				return res.body;
+			} else {
+				return null;
+			}
+		});
+	if (redirect_link) {
+		return {
+			link_id: redirect_link.short_id,
+			redirect_url: redirect_link.redirect_url,
+			detail: null
+		};
+	} else {
 		return {
 			link_id: params.short_id,
 			redirect_url: null,
-			detail: requested_link.detail
+			detail: 'Link is expired'
 		};
 	}
-	return {
-		link_id: requested_link.short_id,
-		redirect_url: requested_link.redirect_url,
-		detail: null
-	};
 };

@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types.js';
 import { superValidate, setError, type SuperValidated, type Infer } from 'sveltekit-superforms';
 import { type FormSchema, formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
-import { type BearerResponse, userLogin } from '$lib/api/auth';
+import { client } from '$lib/client';
 
 export interface LoginData extends SuperValidated<Infer<FormSchema>> {
 	authorized: boolean;
@@ -26,8 +26,28 @@ export const actions: Actions = {
 				authorized: false
 			});
 		}
-		const authResponse: BearerResponse = await userLogin(form.data.email, form.data.password);
-		if (!authResponse.access_token) {
+		const authResponse = await client.auth
+			.login({
+				body: new URLSearchParams({
+					grant_type: '',
+					username: form.data.email,
+					password: form.data.password,
+					scope: '',
+					client_secret: ''
+				}).toString(),
+				headers: {
+					'content-type': 'application/x-www-form-urlencoded'
+				}
+			})
+			.then((res) => {
+				if (res.status === 200) {
+					return res.body;
+				} else {
+					return null;
+				}
+			});
+
+		if (!authResponse) {
 			setError(form, 'email', '');
 			return setError(form, 'password', 'Incorrect login or password');
 		}

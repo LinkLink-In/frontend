@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { type Events, type Props, buttonVariants } from './index.js';
 	import { cn } from '$lib/utils.js';
-	import { Button as ButtonPrimitive } from 'bits-ui';
+	import { Button } from 'bits-ui';
 
+	const { Root } = Button;
 	type $$Props = Props;
 	type $$Events = Events;
 
@@ -13,7 +14,7 @@
 	export { className as class };
 </script>
 
-<ButtonPrimitive.Root
+<Root
 	{builders}
 	class={cn(buttonVariants({ variant, size, className }))}
 	type="button"
@@ -22,4 +23,4 @@
 	on:keydown
 >
 	<slot />
-</ButtonPrimitive.Root>
+</Root>
