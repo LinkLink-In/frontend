@@ -9,6 +9,7 @@ import crypto from 'crypto';
 import { createLink } from '$lib/helpers/createLink';
 import { fetchRedirects } from '$lib/helpers/fetchRedirects';
 import { deleteLink } from '$lib/helpers/deleteLink';
+import { invalidate } from '$app/navigation';
 export interface LinkData extends SuperValidated<Infer<FormSchema>> {
 	url: string | null;
 }
@@ -43,11 +44,88 @@ export const load: ServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
-	createLink: async (event) => await createLink(event, zod),
-	deleteLink: async (event) => await deleteLink(event, zod),
+	createLink: async (event) => {
+		return await createLink(event, zod);
+	},
+	deleteLink: async (event) => {
+		return await deleteLink(event, zod);
+	},
 	editLink: async (event) => {
-		return {
-			action: 'edit'
-		};
+		const form = await superValidate(event, zod(editFormSchema));
+		if (!form.valid) {
+			return fail(400, {
+				form,
+				action: 'edit',
+				url: null
+			});
+		}
+
+		const token = event.cookies.get('access_token');
+		if (!token) redirect(302, '/login');
+
+		let error = false;
+		if (form.data.passphrase_enabled) {
+			if (!form.data.passphrase) {
+				error = true;
+				setError(form, 'passphrase', 'Please specify the passphrase');
+			} else if (!/^[-'"!$%^&*()_+|~=`{}\[\]:\/\\;<>?,.@#№]$/.test(form.data.passphrase)) {
+				error = true;
+				setError(form, 'passphrase', 'Inappropriate passphrase. Please use another one.');
+			}
+		}
+		if (form.data.banner_id_enabled) {
+			if (!form.data.banner_id) {
+				error = true;
+				setError(form, 'banner_id', 'Please specify the banner id');
+			}
+		}
+
+		if (error) {
+			return fail(400, {
+				form,
+				action: 'edit',
+				url: null
+			});
+		}
+
+		const editResponse = await client.links
+			.updateLink({
+				params: { short_id: form.data.short_id },
+				headers: { authorization: `Bearer ${token}` },
+				body: {
+					passphrase: form.data.passphrase_enabled ? form.data.passphrase : null,
+					banner_id: form.data.banner_id_enabled ? form.data.banner_id : null
+				}
+			})
+			.then((res) => {
+				if (res.status === 200) {
+					return res.body;
+				}
+				if (res.status === 404) {
+					return res.body.detail;
+				}
+				if (res.status === 422) {
+					return 'Banner ID is incorrect. Please use another one';
+				}
+				return null;
+			});
+
+		if (typeof editResponse === 'string') {
+			return setError(form, 'banner_id', editResponse);
+		} else {
+			if (!editResponse) {
+				setError(form, 'short_id', 'Failed to edit the link. Try again');
+				return fail(400, {
+					form,
+					action: 'edit',
+					url: null
+				});
+			}
+			return {
+				form,
+				action: 'edit',
+				url: null
+			};
+		}
 	}
 };

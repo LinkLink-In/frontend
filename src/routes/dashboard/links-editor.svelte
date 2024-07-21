@@ -11,17 +11,32 @@
 	export let chosenLink;
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { onMount } from 'svelte';
+	import { redirect } from '@sveltejs/kit';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 
 	const form = superForm(
 		{ ...data, banner_id: chosenLink.banner_id, banner_id_enabled: chosenLink.banner_id_enabled },
 		{
 			validators: zodClient(editFormSchema),
-			dataType: 'json'
+			dataType: 'json',
+			onSubmit({ jsonData }) {
+				jsonData({
+					...$formData,
+					short_id: chosenLink.short_id
+				});
+			},
+			onResult({ result, formElement, cancel }) {
+				if (result.status === 200) {
+					location.reload();
+				}
+			}
 		}
 	);
 	const { form: formData, enhance } = form;
 
 	onMount(() => {
+		const red = document.getElementById('short_id_input');
+		red.value = chosenLink.short_id;
 		const el = document.getElementById('banner_id_input');
 		const el_check = document.getElementById('banner-check');
 		el.value = chosenLink.banner_id;
@@ -61,6 +76,7 @@
 						{...attrs}
 						placeholder="anijakich"
 						startIcon="link"
+						id="short_id_input"
 						value={chosenLink.short_id}
 						disabled
 					></Input>
@@ -162,8 +178,6 @@
 		</div>
 	</div>
 	<div class="flex w-full justify-end">
-		<Sheet.Close>
-			<Button variant="primary-custom" size="standard">Save and close</Button>
-		</Sheet.Close>
+		<Button type="submit" variant="primary-custom" size="standard">Save and close</Button>
 	</div>
 </form>

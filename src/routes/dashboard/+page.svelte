@@ -3,6 +3,8 @@
 	import Table from './links-table.svelte';
 	export let data;
 	export let action;
+	let isLoading = false;
+
 	import * as Sheet from '$lib/components/ui/sheet';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -36,7 +38,8 @@
 			</Sheet.Header>
 			<LinkEditor data={data.editForm} chosenLink={data.chosenLink.link} />
 		</Sheet.Content>
-	{:else}
+	{/if}
+	{#if data.chosenLink.action === 'delete'}
 		<Dialog.Content>
 			<Dialog.Header>
 				<Dialog.Title class="text-xl font-semibold">Are you absolutely sure?</Dialog.Title>
@@ -50,17 +53,19 @@
 				<Dialog.Close>
 					<Button variant="secondary-custom" size="standard" type="submit">Cancel</Button>
 				</Dialog.Close>
-				<Dialog.Close>
-					<form method="POST" action="?/deleteLink">
-						<Button
-							variant="error"
-							size="standard"
-							type="submit"
-							name="link_id"
-							value={data.chosenLink.link.short_id}>Delete</Button
-						>
-					</form>
-				</Dialog.Close>
+				<form method="POST" action="?/deleteLink">
+					<input class="invisible hidden" name="action" value={action} />
+					<Button
+						variant="error"
+						size="standard"
+						type="submit"
+						name="link_id"
+						bind:disabled={isLoading}
+						value={data.chosenLink.link.short_id}
+					>
+						Delete
+					</Button>
+				</form>
 			</Dialog.Footer>
 		</Dialog.Content>
 	{/if}
