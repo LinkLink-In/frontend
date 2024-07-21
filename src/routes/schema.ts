@@ -20,7 +20,7 @@ export const formSchema = z.object({
 	passphrase: z.string(),
 	banner_enabled: z.boolean(),
 	banner_title: z.string(),
-	banner_content: z.string()
+	banner_description: z.string()
 });
 
 export type FormSchema = typeof formSchema;

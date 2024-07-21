@@ -185,21 +185,21 @@
 		<Separator orientation="vertical" />
 		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
-				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
+				<Field {form} name="banner_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
-						<Checkbox {...attrs} id="shortid-check" bind:checked={$formData.banner_enabled} />
-						<Label class="text-[1rem]" for="shortid-check">Banner</Label>
+						<Checkbox {...attrs} id="banner-check" bind:checked={$formData.banner_enabled} />
+						<Label class="text-[1rem]" for="banner-check">Banner</Label>
 					</Control>
 					<FieldErrors />
 				</Field>
 				<div class="flex flex-col gap-3">
-					<Field {form} name="short_id" class="space-y-0">
+					<Field {form} name="banner_title" class="space-y-0">
 						<Control let:attrs>
 							<Input
 								{...attrs}
 								placeholder="Title for the banner"
 								startIcon="rectangle-ad"
-								id="banner-title"
+								id="banner_title"
 								disabled={!$formData.banner_enabled}
 								class="dark:bg-[#1E1F27]"
 								bind:value={$formData.banner_title}
@@ -207,15 +207,15 @@
 						</Control>
 						<FieldErrors />
 					</Field>
-					<Field {form} name="passphrase" class="flex flex-col gap-3 space-y-0">
+					<Field {form} name="banner_description" class="flex flex-col gap-3 space-y-0">
 						<Control let:attrs>
 							<Input
 								{...attrs}
 								placeholder="Description for the banner"
 								startIcon="window-maximize"
-								id="banner-description"
+								id="banner_description"
 								class="dark:bg-[#1E1F27]"
-								bind:value={$formData.banner_content}
+								bind:value={$formData.banner_description}
 								disabled={!$formData.banner_enabled}
 							></Input>
 						</Control>

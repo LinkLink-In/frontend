@@ -60,7 +60,18 @@ export async function createLink(event: RequestEvent, zod: any) {
 			setError(form, 'banner_title', 'Please specify the banner title');
 		} else if (!RegExp('^[A-Za-z0-9 ]+$').test(form.data.banner_title)) {
 			error = true;
-			setError(form, 'banner_content', 'Please specify the banner content');
+			setError(form, 'banner_title', 'Inappropriate banner title. Please specify another one');
+		}
+		if (!form.data.banner_description) {
+			error = true;
+			setError(form, 'banner_description', 'Please specify the banner description');
+		} else if (!RegExp('^[A-Za-z0-9 ]+$').test(form.data.banner_description)) {
+			error = true;
+			setError(
+				form,
+				'banner_description',
+				'Inappropriate banner description. Please specify another one'
+			);
 		}
 	}
 	if (error) {
@@ -76,7 +87,7 @@ export async function createLink(event: RequestEvent, zod: any) {
 			.createBanner({
 				body: {
 					title: form.data.banner_title,
-					description: form.data.banner_content
+					description: form.data.banner_description
 				},
 				headers: { authorization: `Bearer ${token}` }
 			})
