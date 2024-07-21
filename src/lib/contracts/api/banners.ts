@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { authHeader, BannerRead, ObjAny } from '$lib/contracts';
+import { authHeader, BannerRead, ObjAny } from '../index';
 
 const c = initContract();
 export const bannersContract = c.router(

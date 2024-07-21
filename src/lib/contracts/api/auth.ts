@@ -9,11 +9,10 @@ export const authContract = c.router(
 		login: {
 			method: 'POST',
 			path: '/login',
-			query: z.object({
-				username: z.string(),
-				password: z.string()
+			headers: z.object({
+				'Content-Type': z.literal('application/x-www-form-urlencoded')
 			}),
-			body: z.any().optional(),
+			body: z.string(),
 			responses: {
 				200: z.object({
 					access_token: z.string(),
@@ -55,7 +54,9 @@ export const authContract = c.router(
 					is_verified: z.boolean(),
 					name: z.string()
 				}),
-				400: z.union([z.string(), ObjAny]),
+				400: z.object({
+					detail: z.union([z.string(), ObjAny])
+				}),
 				422: ObjAny
 			}
 		}

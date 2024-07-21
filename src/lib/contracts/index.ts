@@ -22,18 +22,18 @@ export const authHeader = z.object({
 
 export const LinkCreate = z.object({
 	redirect_url: z.string(),
-	expiration_date: z.string(),
-	redirects_limit: z.number(),
-	banner_id: z.string(),
-	passphrase: z.string()
+	expiration_date: z.union([z.string(), z.null()]),
+	redirects_limit: z.union([z.number(), z.null()]),
+	banner_id: z.union([z.string(), z.null()]),
+	passphrase: z.union([z.string(), z.null()])
 });
 export const LinkRead = z.object({
 	short_id: z.string(),
-	redirect_url: z.string(),
-	expiration_date: z.string(),
-	redirects_limit: z.number(),
-	banner_id: z.string(),
-	redirects_left: z.number()
+	redirect_url: z.union([z.string(), z.null()]),
+	expiration_date: z.union([z.string(), z.null()]),
+	redirects_limit: z.union([z.number(), z.null()]),
+	banner_id: z.union([z.string(), z.null()]),
+	redirects_left: z.union([z.number(), z.null()])
 });
 
 export const BannerRead = z.object({

@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { authHeader, ObjAny, RedirectCreate, RedirectRead } from '$lib/contracts';
+import { authHeader, ObjAny, RedirectCreate, RedirectRead } from '../index';
 
 const c = initContract();
 export const redirectsContract = c.router(
