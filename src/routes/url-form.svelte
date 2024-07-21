@@ -12,6 +12,9 @@
 	let endIconVal;
 	let current_url;
 
+	export let isPropsHorizontal = false;
+	export let action = undefined;
+
 	const form = superForm(data, {
 		validators: zodClient(formSchema),
 		dataType: 'json',
@@ -51,7 +54,7 @@
 	}
 </script>
 
-<form method="POST" use:enhance class="flex w-full flex-col gap-3">
+<form method="POST" action={action ? action : ''} use:enhance class="flex w-full flex-col gap-3">
 	<div class="flex gap-4">
 		<Field {form} name="redirect_url" class="w-full space-y-0">
 			<Control let:attrs class="w-full">
@@ -68,8 +71,8 @@
 		</Field>
 		<Button type="">Generate link</Button>
 	</div>
-	<div class="flex items-center gap-3 rounded-xl bg-[#FFFFFF] p-3">
-		<div class="flex h-full flex-col gap-3 p-3">
+	<div class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3`}>
+		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -83,6 +86,7 @@
 							{...attrs}
 							disabled={!$formData.expiration_date_enabled}
 							bind:dateValue={$formData.expiration_date}
+							className={isPropsHorizontal ? 'w-[10rem]' : ''}
 						/>
 					</Control>
 					<FieldErrors />
@@ -110,13 +114,14 @@
 							min="1"
 							disabled={!$formData.redirects_limit_enabled}
 							bind:value={$formData.redirects_limit}
+							className={isPropsHorizontal ? 'w-[10rem]' : ''}
 						></Input>
 					</Control>
 					<FieldErrors />
 				</Field>
 			</div>
 		</div>
-		<div class="flex h-full flex-col gap-3 p-3">
+		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
