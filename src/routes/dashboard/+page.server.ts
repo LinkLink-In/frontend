@@ -68,7 +68,9 @@ export const actions: Actions = {
 			if (!form.data.passphrase) {
 				error = true;
 				setError(form, 'passphrase', 'Please specify the passphrase');
-			} else if (!/^[-'"!$%^&*()_+|~=`{}\[\]:\/\\;<>?,.@#№]$/.test(form.data.passphrase)) {
+			} else if (
+				!/^[A-Za-z0-9-'"!$%^&*()_+|~=`{}\[\]:\/\\;<>?,.@#№]+$/.test(form.data.passphrase)
+			) {
 				error = true;
 				setError(form, 'passphrase', 'Inappropriate passphrase. Please use another one.');
 			}

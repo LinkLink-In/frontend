@@ -22,7 +22,8 @@
 			onSubmit({ jsonData }) {
 				jsonData({
 					...$formData,
-					short_id: chosenLink.short_id
+					short_id: chosenLink.short_id,
+					banner_id: $formData.banner_id ? $formData.banner_id : chosenLink.banner_id
 				});
 			},
 			onResult({ result, formElement, cancel }) {
