@@ -87,6 +87,7 @@
 							disabled={!$formData.expiration_date_enabled}
 							bind:dateValue={$formData.expiration_date}
 							className={isPropsHorizontal ? 'w-[10rem]' : ''}
+							placeholder="Pick a date"
 						/>
 					</Control>
 					<FieldErrors />
