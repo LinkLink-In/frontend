@@ -15,7 +15,9 @@ export const formSchema = z.object({
 	expiration_date_enabled: z.boolean(),
 	expiration_date: z.string(),
 	redirects_limit_enabled: z.boolean(),
-	redirects_limit: z.string()
+	redirects_limit: z.string(),
+	passphrase_enabled: z.boolean(),
+	passphrase: z.string()
 });
 
 export type FormSchema = typeof formSchema;

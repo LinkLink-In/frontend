@@ -94,7 +94,7 @@
 							{...attrs}
 							disabled={!$formData.expiration_date_enabled}
 							bind:dateValue={$formData.expiration_date}
-							className={isPropsHorizontal ? 'w-[10rem]' : ''}
+							className={isPropsHorizontal ? 'w-[10rem]' : 'w-full'}
 							placeholder="Pick a date"
 						/>
 					</Control>
@@ -149,6 +149,33 @@
 							disabled={!$formData.short_id_enabled}
 							class="dark:bg-[#1E1F27]"
 							bind:value={$formData.short_id}
+						></Input>
+					</Control>
+					<FieldErrors />
+				</Field>
+			</div>
+			<div class="flex flex-col gap-3">
+				<Field {form} name="passphrase_enabled" class="flex items-center gap-3 space-y-0">
+					<Control let:attrs>
+						<Checkbox
+							{...attrs}
+							id="passphrase-check"
+							bind:checked={$formData.passphrase_enabled}
+						/>
+						<Label class="text-[1rem]" for="passphrase-check">Passphrase</Label>
+					</Control>
+					<FieldErrors />
+				</Field>
+				<Field {form} name="passphrase" class="flex flex-col gap-1.5 space-y-0">
+					<Control let:attrs>
+						<Input
+							{...attrs}
+							placeholder="Enter new passphrase..."
+							startIcon="lock"
+							type="password"
+							class="dark:bg-[#1E1F27]"
+							bind:value={$formData.passphrase}
+							disabled={!$formData.passphrase_enabled}
 						></Input>
 					</Control>
 					<FieldErrors />
