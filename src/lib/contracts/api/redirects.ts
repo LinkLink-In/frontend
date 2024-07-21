@@ -17,16 +17,6 @@ export const redirectsContract = c.router(
 				422: ObjAny
 			}
 		},
-		createRedirect: {
-			method: 'PUT',
-			path: '/',
-			headers: authHeader,
-			body: RedirectCreate,
-			responses: {
-				200: RedirectRead,
-				422: ObjAny
-			}
-		},
 		listRedirects: {
 			method: 'GET',
 			path: '/',

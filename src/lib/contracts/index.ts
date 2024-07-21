@@ -55,13 +55,3 @@ export const RedirectRead = z.object({
 	id: z.string(),
 	redirected_at: z.string()
 });
-
-export const RedirectCreate = z.object({
-	link_id: z.string(),
-	ip: z.string(),
-	user_agent: z.string(),
-	referrer: z.string(),
-	browser: z.string(),
-	platform: z.string(),
-	language: z.string()
-});
