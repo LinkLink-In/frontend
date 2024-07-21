@@ -43,6 +43,7 @@ export async function deleteLink(event: RequestEvent, zod: any) {
 	if (!links) {
 		return {
 			links: [],
+			action: 'delete',
 			urlForm: await superValidate(zod(formSchema)),
 			editForm: await superValidate(zod(editFormSchema)),
 			url: null
@@ -51,6 +52,7 @@ export async function deleteLink(event: RequestEvent, zod: any) {
 	const linksWithRedirects = await fetchRedirects(links, token);
 	return {
 		links: linksWithRedirects,
+		action: 'delete',
 		url: null
 	};
 }
