@@ -9,6 +9,7 @@
 		link_id: string;
 		redirect_url: string;
 		detail: string | null;
+		banner: string | null;
 	}
 	let redirect_url = data.redirect_url;
 	let detail = null;
@@ -45,6 +46,7 @@
 				if (exitFlag) {
 					detail = 'Incorrect passphrase';
 					window.location.href = `${import.meta.env.VITE_LINK_HOST}/pass-fail`;
+					return;
 				}
 				window.location.href = redirect_url;
 			}
@@ -66,25 +68,37 @@
 							You will see the requested content shortly.
 						</p>
 					</div>
-					<div class="flex w-[31rem] justify-between gap-5 rounded-lg bg-[#F2F2F2] p-7">
-						<div class="flex items-center gap-7">
-							<div class="text-5xl">&#127844;</div>
-							<div class="banner-text">
-								<span class="text-xl">Fried shrimps</span>
-								<ul class="list-inside list-disc">
-									<li>yummy</li>
-									<li>crunchy</li>
-									<li>ready in 15 minutes</li>
-								</ul>
+					{#if data.banner === null}
+						<div class="flex w-[31rem] justify-between gap-5 rounded-lg bg-[#F2F2F2] p-7">
+							<div class="flex items-center gap-7">
+								<div class="text-5xl">&#127844;</div>
+								<div class="banner-text">
+									<span class="text-xl">Fried shrimps</span>
+									<ul class="list-inside list-disc">
+										<li>yummy</li>
+										<li>crunchy</li>
+										<li>ready in 15 minutes</li>
+									</ul>
+								</div>
+							</div>
+							<div class="flex flex-col justify-between">
+								<span class="flex text-4xl font-semibold">
+									$4.99<span class="text-xl line-through opacity-50">$9.99</span>
+								</span>
+								<button class="text-white w-full rounded-xl bg-orange p-3">Order now</button>
 							</div>
 						</div>
-						<div class="flex flex-col justify-between">
-							<span class="flex text-4xl font-semibold">
-								$4.99<span class="text-xl line-through opacity-50">$9.99</span>
-							</span>
-							<button class="text-white w-full rounded-xl bg-orange p-3">Order now</button>
+					{:else}
+						<div class="flex w-[31rem] justify-between gap-5 rounded-lg bg-[#F2F2F2] p-7">
+							<div class="flex items-center gap-7">
+								<div class="text-5xl">&#127844;</div>
+								<div class="banner-text">
+									<span class="text-2xl font-bold">{data.banner.title}</span>
+									<p>{data.banner.description}</p>
+								</div>
+							</div>
 						</div>
-					</div>
+					{/if}
 				</div>
 				<p class="text-center font-medium opacity-50">
 					Paid advertisement. Want to remove this banner? <br />Upgrade to

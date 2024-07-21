@@ -11,7 +11,6 @@ export const bannersContract = c.router(
 			pathParams: z.object({
 				banner_id: z.string()
 			}),
-			headers: authHeader,
 			responses: {
 				200: BannerRead,
 				422: ObjAny
