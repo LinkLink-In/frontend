@@ -17,7 +17,10 @@ export const formSchema = z.object({
 	redirects_limit_enabled: z.boolean(),
 	redirects_limit: z.string(),
 	passphrase_enabled: z.boolean(),
-	passphrase: z.string()
+	passphrase: z.string(),
+	banner_enabled: z.boolean(),
+	banner_title: z.string(),
+	banner_description: z.string()
 });
 
 export type FormSchema = typeof formSchema;

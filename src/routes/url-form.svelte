@@ -6,7 +6,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { formSchema } from './schema';
-
+	import { Separator } from '$lib/components/ui/separator/index.js';
 	export let data;
 
 	let endIconVal;
@@ -80,7 +80,7 @@
 	<div
 		class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3 dark:bg-[#1E1F27]`}
 	>
-		<div class={`flex h-full w-1/2 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -131,7 +131,7 @@
 				</Field>
 			</div>
 		</div>
-		<div class={`flex h-full w-1/2 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -180,6 +180,48 @@
 					</Control>
 					<FieldErrors />
 				</Field>
+			</div>
+		</div>
+		<Separator orientation="vertical" />
+		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+			<div class="flex flex-col gap-3">
+				<Field {form} name="banner_enabled" class="flex items-center gap-3 space-y-0">
+					<Control let:attrs>
+						<Checkbox {...attrs} id="banner-check" bind:checked={$formData.banner_enabled} />
+						<Label class="text-[1rem]" for="banner-check">Banner</Label>
+					</Control>
+					<FieldErrors />
+				</Field>
+				<div class="flex flex-col gap-3">
+					<Field {form} name="banner_title" class="space-y-0">
+						<Control let:attrs>
+							<Input
+								{...attrs}
+								placeholder="Title for the banner"
+								startIcon="rectangle-ad"
+								id="banner_title"
+								disabled={!$formData.banner_enabled}
+								class="dark:bg-[#1E1F27]"
+								bind:value={$formData.banner_title}
+							></Input>
+						</Control>
+						<FieldErrors />
+					</Field>
+					<Field {form} name="banner_description" class="flex flex-col gap-3 space-y-0">
+						<Control let:attrs>
+							<Input
+								{...attrs}
+								placeholder="Description for the banner"
+								startIcon="window-maximize"
+								id="banner_description"
+								class="dark:bg-[#1E1F27]"
+								bind:value={$formData.banner_description}
+								disabled={!$formData.banner_enabled}
+							></Input>
+						</Control>
+						<FieldErrors />
+					</Field>
+				</div>
 			</div>
 		</div>
 	</div>

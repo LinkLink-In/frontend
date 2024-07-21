@@ -17,32 +17,8 @@ export async function createLink(event: RequestEvent, zod: any) {
 	const token = event.cookies.get('access_token');
 	if (!token) redirect(302, '/login');
 
-	const banner = event.cookies.get('banner_id');
-	if (!banner) {
-		const bannerCreate = await client.banners
-			.createBanner({
-				body: {
-					title: `${crypto.randomUUID().toString()}`,
-					description: `${crypto.randomUUID().toString()}`
-				},
-				headers: { authorization: `Bearer ${token}` }
-			})
-			.then((res) => {
-				if (res.status === 200) return res.body;
-				else return null;
-			});
-		if (!bannerCreate) {
-			return fail(400, {
-				form,
-				url: null
-			});
-		}
-		event.cookies.set('banner_id', bannerCreate.id, {
-			path: '/',
-			sameSite: 'strict',
-			httpOnly: false
-		});
-	}
+	//const banner = event.cookies.get('banner_id');
+
 	let error = false;
 	if (form.data.passphrase_enabled) {
 		if (!form.data.passphrase) {
@@ -55,22 +31,47 @@ export async function createLink(event: RequestEvent, zod: any) {
 	}
 	if (form.data.short_id_enabled) {
 		if (!form.data.short_id) {
+			error = true;
 			setError(form, 'short_id', 'Please specify the short_id');
 		}
 		if (!RegExp('^[A-Za-z0-9]+$').test(form.data.short_id)) {
+			error = true;
 			setError(form, 'short_id', 'Inappropriate short link. Please use another one.');
 		}
 	}
 	if (form.data.expiration_date_enabled) {
 		if (!form.data.expiration_date) {
+			error = true;
 			setError(form, 'expiration_date', 'Please specify the expiration date');
 		}
 	}
 	if (form.data.redirects_limit_enabled) {
 		if (!form.data.redirects_limit) {
+			error = true;
 			setError(form, 'redirects_limit', 'Please specify the redirects limit');
 		} else if (parseInt(form.data.redirects_limit) <= 0) {
+			error = true;
 			setError(form, 'redirects_limit', 'Redirects limit must be a positive number');
+		}
+	}
+	if (form.data.banner_enabled) {
+		if (!form.data.banner_title) {
+			error = true;
+			setError(form, 'banner_title', 'Please specify the banner title');
+		} else if (!RegExp('^[A-Za-z0-9 ]+$').test(form.data.banner_title)) {
+			error = true;
+			setError(form, 'banner_title', 'Inappropriate banner title. Please specify another one');
+		}
+		if (!form.data.banner_description) {
+			error = true;
+			setError(form, 'banner_description', 'Please specify the banner description');
+		} else if (!RegExp('^[A-Za-z0-9 ]+$').test(form.data.banner_description)) {
+			error = true;
+			setError(
+				form,
+				'banner_description',
+				'Inappropriate banner description. Please specify another one'
+			);
 		}
 	}
 	if (error) {
@@ -78,6 +79,26 @@ export async function createLink(event: RequestEvent, zod: any) {
 			form,
 			url: null
 		});
+	}
+
+	let banner_id = null;
+	if (form.data.banner_enabled) {
+		const bannerCreate = await client.banners
+			.createBanner({
+				body: {
+					title: form.data.banner_title,
+					description: form.data.banner_description
+				},
+				headers: { authorization: `Bearer ${token}` }
+			})
+			.then((res) => {
+				if (res.status === 200) return res.body;
+				else return null;
+			});
+		if (!bannerCreate) {
+			return setError(form, 'banner_title', 'Failed to create the banner. Please try again.');
+		}
+		banner_id = bannerCreate.id;
 	}
 
 	const linkResponse = await client.links
@@ -89,7 +110,7 @@ export async function createLink(event: RequestEvent, zod: any) {
 				redirects_limit: form.data.redirects_limit_enabled
 					? parseInt(form.data.redirects_limit)
 					: null,
-				banner_id: null,
+				banner_id: form.data.banner_enabled ? banner_id : null,
 				passphrase: form.data.passphrase_enabled ? form.data.passphrase : null
 			},
 			headers: {
