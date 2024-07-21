@@ -1,6 +1,12 @@
 <script lang="ts">
 	import CalendarIcon from 'lucide-svelte/icons/calendar';
-	import { DateFormatter, type DateValue, getLocalTimeZone } from '@internationalized/date';
+	import {
+		CalendarDate,
+		DateFormatter,
+		type DateValue,
+		getLocalTimeZone,
+		today
+	} from '@internationalized/date';
 	import { cn } from '$lib/utils.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Calendar } from '$lib/components/ui/calendar/index.js';
@@ -33,6 +39,6 @@
 		</Button>
 	</Trigger>
 	<Content class="w-auto p-0">
-		<Calendar bind:value initialFocus />
+		<Calendar minValue={today(getLocalTimeZone()).add({ days: 1 })} bind:value initialFocus />
 	</Content>
 </Root>
