@@ -65,7 +65,11 @@
 					<div class="flex flex-col gap-1">
 						<h1 class="text-center text-3xl font-semibold">Redirecting...</h1>
 						<p class="text-2xl font-semibold opacity-75">
-							You will see the requested content shortly.
+							{#if data.redirect_url !== null}
+								You will see the requested content shortly.
+							{:else}
+								Awaiting your password entry...
+							{/if}
 						</p>
 					</div>
 					{#if data.banner === null}
