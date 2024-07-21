@@ -44,5 +44,10 @@ export const load: ServerLoad = async (event) => {
 
 export const actions: Actions = {
 	createLink: async (event) => await createLink(event, zod),
-	deleteLink: async (event) => await deleteLink(event, zod)
+	deleteLink: async (event) => await deleteLink(event, zod),
+	editLink: async (event) => {
+		return {
+			action: 'edit'
+		};
+	}
 };
