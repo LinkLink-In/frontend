@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { authHeader, LinkCreate, LinkRead, ObjAny } from '../index';
+import { authHeader, LinkCreate, LinkRead, ObjAny } from '../types';
 
 const c = initContract();
 export const linksContract = c.router(

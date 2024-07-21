@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { authHeader } from '$lib/contracts';
+import { authHeader } from '../types';
 
 const c = initContract();
 export const usersContract = c.router(

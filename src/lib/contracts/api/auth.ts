@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { authHeader, ObjAny } from '../index';
+import { authHeader, ObjAny } from '../types';
 
 const c = initContract();
 
