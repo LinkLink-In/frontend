@@ -42,7 +42,7 @@
 					<Button href="/login">Log in</Button>
 				{/if}
 			{:else}
-				<button><i class="fa-solid fa-user"></i></button>
+				<Button variant="ghost" href="/dashboard"><i class="fa-solid fa-user"></i></Button>
 			{/if}
 		</div>
 	</header>
