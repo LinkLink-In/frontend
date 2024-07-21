@@ -36,7 +36,7 @@ export const authContract = c.router(
 		},
 		register: {
 			method: 'POST',
-			path: '/logout',
+			path: '/register',
 			body: z.object({
 				email: z.string(),
 				password: z.string(),
