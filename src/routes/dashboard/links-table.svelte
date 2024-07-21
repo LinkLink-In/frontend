@@ -21,10 +21,11 @@
 	type Link = {
 		short_id: string;
 		redirect_url: string;
-		visitors: number;
-		created_at: string;
-		expiration_date: string;
-		redirects_left: number;
+		expiration_date: string | null;
+		redirects_limit: number | null;
+		redirects_left: number | null;
+		banner_id: string | null;
+		visitors: 0;
 	};
 	export let data;
 	const linkStore = writable(data);
@@ -63,6 +64,7 @@
 			accessor: 'expiration_date',
 			header: 'Expires at',
 			cell: ({ value }) => {
+				if (value === null) return '—';
 				return df.format(new Date(value));
 			},
 			plugins: {
@@ -75,11 +77,11 @@
 			accessor: 'redirects_left',
 			header: 'Visits left',
 			cell: (cell) => {
-				if (cell.value === -1) {
-					if (cell.row.original.redirects_limit === -1) return `unlimited`;
+				if (cell.value === null) {
+					if (cell.row.original.redirects_limit === null) return `unlimited`;
 					return 0;
 				} else {
-					return cell.value;
+					return cell.value === -1 ? 0 : cell.value;
 				}
 			},
 			plugins: {
