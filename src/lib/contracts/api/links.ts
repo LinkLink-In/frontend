@@ -40,8 +40,8 @@ export const linksContract = c.router(
 			}),
 			headers: authHeader,
 			body: z.object({
-				passphrase: z.string(),
-				banner_id: z.string()
+				passphrase: z.union([z.string(), z.null()]),
+				banner_id: z.union([z.string(), z.null()])
 			}),
 			responses: {
 				200: LinkRead,

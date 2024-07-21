@@ -3,13 +3,10 @@
 	import Check from 'svelte-radix/Check.svelte';
 	import Minus from 'svelte-radix/Minus.svelte';
 	import { cn } from '$lib/utils.js';
-
 	type $$Props = CheckboxPrimitive.Props;
 	type $$Events = CheckboxPrimitive.Events;
-
 	let className: $$Props['class'] = undefined;
 	export let checked: $$Props['checked'] = false;
-	export let id;
 	export { className as class };
 </script>
 
@@ -18,7 +15,6 @@
 		'peer box-content h-6 w-6 shrink-0 rounded-md border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled=true]:cursor-not-allowed data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[disabled=true]:opacity-50',
 		className
 	)}
-	{id}
 	bind:checked
 	on:click
 	{...$$restProps}

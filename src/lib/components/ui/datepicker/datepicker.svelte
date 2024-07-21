@@ -5,6 +5,7 @@
 		DateFormatter,
 		type DateValue,
 		getLocalTimeZone,
+		parseDate,
 		today
 	} from '@internationalized/date';
 	import { cn } from '$lib/utils.js';
@@ -17,7 +18,9 @@
 	});
 	export let dateValue;
 	export let disabled;
-	let value: DateValue | undefined = undefined;
+	export let className;
+	export let placeholder;
+	export let value: DateValue | undefined = undefined;
 	$: {
 		if (value) {
 			const toSetValue = value.toDate('Europe/Moscow');
@@ -30,12 +33,16 @@
 	<Trigger asChild let:builder>
 		<Button
 			variant="outline"
-			class={cn('w-[280px] justify-start text-left font-normal', !value && 'text-muted-foreground')}
+			class={cn(
+				'justify-start text-left font-normal',
+				!value && 'text-muted-foreground',
+				className
+			)}
 			{disabled}
 			builders={[builder]}
 		>
 			<CalendarIcon class="mr-2 h-4 w-4" />
-			{value ? df.format(value.toDate('Europe/Moscow')) : 'Pick a date'}
+			{value ? df.format(value.toDate('Europe/Moscow')) : placeholder}
 		</Button>
 	</Trigger>
 	<Content class="w-auto p-0">
