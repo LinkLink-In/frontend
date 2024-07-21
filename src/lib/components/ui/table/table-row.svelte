@@ -12,7 +12,7 @@
 
 <tr
 	class={cn(
-		'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+		'w-fit border-b bg-[#ffffff] transition-colors [&_td:first-child]:last:rounded-es-xl [&_td:last-child]:last:rounded-ee-xl [&_th:first-child]:first:rounded-ss-xl [&_th:last-child]:first:rounded-se-xl',
 		className
 	)}
 	{...$$restProps}

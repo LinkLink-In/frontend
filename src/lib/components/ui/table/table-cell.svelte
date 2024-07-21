@@ -10,7 +10,7 @@
 
 <td
 	class={cn(
-		'p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+		'p-2 px-6 align-middle text-base [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
 		className
 	)}
 	{...$$restProps}
