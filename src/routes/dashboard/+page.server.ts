@@ -8,6 +8,7 @@ import { client } from '$lib/client';
 import crypto from 'crypto';
 import { createLink } from '$lib/helpers/createLink';
 import { fetchRedirects } from '$lib/helpers/fetchRedirects';
+import { deleteLink } from '$lib/helpers/deleteLink';
 export interface LinkData extends SuperValidated<Infer<FormSchema>> {
 	url: string | null;
 }
@@ -43,35 +44,5 @@ export const load: ServerLoad = async (event) => {
 
 export const actions: Actions = {
 	createLink: async (event) => await createLink(event, zod),
-	deleteLink: async (event) => {
-		const token = event.cookies.get('access_token');
-		if (!token) redirect(302, '/login');
-
-		const data = await event.request.formData();
-		const short_id = data.get('link_id');
-
-		const res = await deleteLink(short_id, token);
-		if (res.status !== 200) {
-			console.log('Link failed to be deleted', short_id);
-		} else {
-			console.log('deleted');
-		}
-
-		const links = await getLinks(token);
-		if (links === 401) {
-			redirect(302, '/login');
-		}
-		if (links === 404) {
-			return {
-				links: [],
-				url: null
-			};
-		}
-		let linksWithVisits = await getRedirectsOfLinks(links, token);
-
-		return {
-			links: linksWithVisits,
-			url: null
-		};
-	}
+	deleteLink: async (event) => await deleteLink(event, zod)
 };

@@ -41,7 +41,7 @@
 			<Dialog.Header>
 				<Dialog.Title class="text-xl font-semibold">Are you absolutely sure?</Dialog.Title>
 				<Dialog.Description>
-					This will permanently delete your «{data.chosenLink.link.short_id}» link from our servers.
+					This will PERMANENTLY delete your «{data.chosenLink.link.short_id}» link from our servers.
 					<br />
 					This action cannot be undone.
 				</Dialog.Description>
