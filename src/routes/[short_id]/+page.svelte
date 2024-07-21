@@ -14,47 +14,47 @@
 	let redirect_url = data.redirect_url;
 	let detail = null;
 
-	// onMount(async () => {
-	// 	if (data.detail === null) {
-	// 	if (!redirect_url) {
-	// 		let exitFlag = false;
-	// 		while (true) {
-	// 			let passphrase = prompt('Please enter the passphrase to access the requested URL');
-	// 			const resp = await client.links
-	// 				.checkPassphrase({
-	// 					params: { short_id: data.link_id },
-	// 					body: { passphrase: passphrase }
-	// 				})
-	// 				.then((res) => {
-	// 					if (res.status === 200) return res.body;
-	// 					if (res.status === 400) return res.body.detail;
-	// 					return null;
-	// 				})
-	// 				.catch((e) => {
-	// 					throw e;
-	// 				});
-	// 			if (!resp) {
-	// 				exitFlag = true;
-	// 				break;
-	// 			}
-	// 			if (typeof resp.redirect_url === 'string') {
-	// 				redirect_url = resp.redirect_url;
-	// 				break;
-	// 			}
-	// 			alert('Incorrect password.');
-	// 		}
-	// 		if (exitFlag) {
-	// 			detail = 'Incorrect passphrase';
-	// 			window.location.href = `${import.meta.env.VITE_LINK_HOST}/pass-fail`;
-	// 			return;
-	// 		}
-	// 		window.location.href = redirect_url;
-	// 	}
-	// 	setTimeout(() => {
-	// 		window.location.href = redirect_url;
-	// 	}, 2000);
-	// }
-	// });
+	onMount(async () => {
+		if (data.detail === null) {
+			if (!redirect_url) {
+				let exitFlag = false;
+				while (true) {
+					let passphrase = prompt('Please enter the passphrase to access the requested URL');
+					const resp = await client.links
+						.checkPassphrase({
+							params: { short_id: data.link_id },
+							body: { passphrase: passphrase }
+						})
+						.then((res) => {
+							if (res.status === 200) return res.body;
+							if (res.status === 400) return res.body.detail;
+							return null;
+						})
+						.catch((e) => {
+							throw e;
+						});
+					if (!resp) {
+						exitFlag = true;
+						break;
+					}
+					if (typeof resp.redirect_url === 'string') {
+						redirect_url = resp.redirect_url;
+						break;
+					}
+					alert('Incorrect password.');
+				}
+				if (exitFlag) {
+					detail = 'Incorrect passphrase';
+					window.location.href = `${import.meta.env.VITE_LINK_HOST}/pass-fail`;
+					return;
+				}
+				window.location.href = redirect_url;
+			}
+			setTimeout(() => {
+				window.location.href = redirect_url;
+			}, 2000);
+		}
+	});
 </script>
 
 <div class="flex min-h-full w-full flex-col">
