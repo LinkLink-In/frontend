@@ -44,6 +44,15 @@ export async function createLink(event: RequestEvent, zod: any) {
 		});
 	}
 	let error = false;
+	if (form.data.passphrase_enabled) {
+		if (!form.data.passphrase) {
+			error = true;
+			setError(form, 'passphrase', 'Please specify the passphrase');
+		} else if (!/^[A-Za-z0-9-'"!$%^&*()_+|~=`{}\[\]:\/\\;<>?,.@#№]+$/.test(form.data.passphrase)) {
+			error = true;
+			setError(form, 'passphrase', 'Inappropriate passphrase. Please use another one.');
+		}
+	}
 	if (form.data.short_id_enabled) {
 		if (!form.data.short_id) {
 			setError(form, 'short_id', 'Please specify the short_id');
@@ -81,7 +90,7 @@ export async function createLink(event: RequestEvent, zod: any) {
 					? parseInt(form.data.redirects_limit)
 					: null,
 				banner_id: null,
-				passphrase: null //form.data.passphrase ? form.data.passphrase : null
+				passphrase: form.data.passphrase_enabled ? form.data.passphrase : null
 			},
 			headers: {
 				authorization: `Bearer ${token}`
