@@ -103,6 +103,10 @@ const config: Config = {
 			},
 			fontFamily: {
 				sans: [...fontFamily.sans]
+			},
+			screens: {
+				sm: '0px',
+				md: '750px'
 			}
 		}
 	}

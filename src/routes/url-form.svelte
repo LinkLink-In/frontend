@@ -60,7 +60,7 @@
 	use:enhance
 	class="flex w-full flex-col gap-3 dark:text-[#FFFFFF]"
 >
-	<div class="flex gap-4">
+	<div class="flex gap-4 sm:flex-col md:flex-row">
 		<Field {form} name="redirect_url" class="w-full space-y-0">
 			<Control let:attrs class="w-full">
 				<Input
@@ -75,12 +75,14 @@
 			</Control>
 			<FieldErrors />
 		</Field>
-		<Button type="">Generate link</Button>
+		<Button type="submit">Generate link</Button>
 	</div>
 	<div
-		class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3 dark:bg-[#1E1F27]`}
+		class={`flex items-center sm:flex-col md:flex-row ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3 dark:bg-[#1E1F27] sm:h-[560px] md:h-auto`}
 	>
-		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<div
+			class={`flex h-full gap-3 p-3 sm:w-full md:w-1/3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}
+		>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -131,7 +133,9 @@
 				</Field>
 			</div>
 		</div>
-		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<div
+			class={`flex h-full gap-3 p-3 sm:w-full md:w-1/3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}
+		>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -182,8 +186,11 @@
 				</Field>
 			</div>
 		</div>
-		<Separator orientation="vertical" />
-		<div class={`flex h-full w-1/3 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<Separator orientation="vertical" class="sm:hidden md:block" />
+		<Separator orientation="horizontal" class="sm:block md:hidden" />
+		<div
+			class={`flex h-full gap-3 p-3 sm:w-full md:w-1/3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}
+		>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="banner_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>

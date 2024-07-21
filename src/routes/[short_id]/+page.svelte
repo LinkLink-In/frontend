@@ -14,57 +14,57 @@
 	let redirect_url = data.redirect_url;
 	let detail = null;
 
-	onMount(async () => {
-		if (data.detail === null) {
-			if (!redirect_url) {
-				let exitFlag = false;
-				while (true) {
-					let passphrase = prompt('Please enter the passphrase to access the requested URL');
-					const resp = await client.links
-						.checkPassphrase({
-							params: { short_id: data.link_id },
-							body: { passphrase: passphrase }
-						})
-						.then((res) => {
-							if (res.status === 200) return res.body;
-							if (res.status === 400) return res.body.detail;
-							return null;
-						})
-						.catch((e) => {
-							throw e;
-						});
-					if (!resp) {
-						exitFlag = true;
-						break;
-					}
-					if (typeof resp.redirect_url === 'string') {
-						redirect_url = resp.redirect_url;
-						break;
-					}
-					alert('Incorrect password.');
-				}
-				if (exitFlag) {
-					detail = 'Incorrect passphrase';
-					window.location.href = `${import.meta.env.VITE_LINK_HOST}/pass-fail`;
-					return;
-				}
-				window.location.href = redirect_url;
-			}
-			setTimeout(() => {
-				window.location.href = redirect_url;
-			}, 2000);
-		}
-	});
+	// onMount(async () => {
+	// 	if (data.detail === null) {
+	// 		if (!redirect_url) {
+	// 			let exitFlag = false;
+	// 			while (true) {
+	// 				let passphrase = prompt('Please enter the passphrase to access the requested URL');
+	// 				const resp = await client.links
+	// 					.checkPassphrase({
+	// 						params: { short_id: data.link_id },
+	// 						body: { passphrase: passphrase }
+	// 					})
+	// 					.then((res) => {
+	// 						if (res.status === 200) return res.body;
+	// 						if (res.status === 400) return res.body.detail;
+	// 						return null;
+	// 					})
+	// 					.catch((e) => {
+	// 						throw e;
+	// 					});
+	// 				if (!resp) {
+	// 					exitFlag = true;
+	// 					break;
+	// 				}
+	// 				if (typeof resp.redirect_url === 'string') {
+	// 					redirect_url = resp.redirect_url;
+	// 					break;
+	// 				}
+	// 				alert('Incorrect password.');
+	// 			}
+	// 			if (exitFlag) {
+	// 				detail = 'Incorrect passphrase';
+	// 				window.location.href = `${import.meta.env.VITE_LINK_HOST}/pass-fail`;
+	// 				return;
+	// 			}
+	// 			window.location.href = redirect_url;
+	// 		}
+	// 		setTimeout(() => {
+	// 			window.location.href = redirect_url;
+	// 		}, 2000);
+	// 	}
+	// });
 </script>
 
 <div class="flex min-h-full w-full flex-col">
 	<div class="flex w-full flex-grow flex-col items-center justify-center">
 		{#if data.detail === null}
-			<div class="flex w-[50rem] flex-col items-center gap-2">
-				<div class="flex flex-col items-center gap-3">
-					<div class="flex flex-col gap-1">
+			<div class="flex flex-col items-center gap-2 sm:w-5/6 md:w-[50rem]">
+				<div class="flex flex-col items-center gap-3 sm:mb-10 md:mb-0">
+					<div class="flex flex-col gap-1 sm:mb-10 md:mb-0">
 						<h1 class="text-center text-3xl font-semibold">Redirecting...</h1>
-						<p class="text-2xl font-semibold opacity-75">
+						<p class="text-center text-2xl font-semibold opacity-75">
 							{#if data.redirect_url !== null}
 								You will see the requested content shortly.
 							{:else}
@@ -74,9 +74,9 @@
 					</div>
 					{#if data.banner === null}
 						<div
-							class="flex w-[31rem] justify-between gap-5 rounded-lg bg-[#F2F2F2] p-7 dark:bg-[#1E1F27]"
+							class="flex justify-between gap-5 rounded-lg bg-[#F2F2F2] p-7 dark:bg-[#1E1F27] sm:w-full sm:flex-col md:w-[31rem] md:flex-row"
 						>
-							<div class="flex items-center gap-7">
+							<div class="flex items-center justify-center gap-7">
 								<div class="text-5xl">&#127844;</div>
 								<div class="banner-text">
 									<span class="text-xl">Fried shrimps</span>
@@ -88,10 +88,10 @@
 								</div>
 							</div>
 							<div class="flex flex-col justify-between">
-								<span class="flex text-4xl font-semibold">
+								<span class="flex justify-center text-4xl font-semibold">
 									$4.99<span class="text-xl line-through opacity-50">$9.99</span>
 								</span>
-								<button class="text-white w-full rounded-xl bg-orange p-3">Order now</button>
+								<button class="text-white mt-5 w-full rounded-xl bg-orange p-3">Order now</button>
 							</div>
 						</div>
 					{:else}

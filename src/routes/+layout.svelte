@@ -38,9 +38,9 @@
 <DropdownMenu.Root>
 	<div class="flex min-h-screen w-screen flex-col" class:dark={dark_theme_check}>
 		<header
-			class="flex h-16 w-full items-center justify-between px-8 py-4 dark:bg-[#1E1F27] dark:text-[#FFFFFF]"
+			class="flex h-16 w-[calc(100%-3rem)] items-center justify-between py-4 dark:bg-[#1E1F27] dark:text-[#FFFFFF] sm:mx-6 md:px-8"
 		>
-			<span class="text-2xl font-bold">
+			<span class="sm:text-md font-bold md:text-2xl">
 				<a href="/">LinkLink In</a>
 			</span>
 			<div class="flex items-center gap-8">
