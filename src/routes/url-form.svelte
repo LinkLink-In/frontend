@@ -107,6 +107,7 @@
 							placeholder="100"
 							startIcon="eye"
 							type="number"
+							min="1"
 							disabled={!$formData.redirects_limit_enabled}
 							bind:value={$formData.redirects_limit}
 						></Input>
