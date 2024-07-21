@@ -6,10 +6,11 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { editFormSchema } from './schema';
+	import { parseDate } from '@internationalized/date';
 	export let data;
 	export let chosenLink;
-	// let endIconVal;
-	// let current_url;
+	import * as Sheet from '$lib/components/ui/sheet';
+
 	const form = superForm(data, {
 		validators: zodClient(editFormSchema),
 		dataType: 'json'
@@ -19,109 +20,95 @@
 
 <form method="POST" action="?/editLink" use:enhance class="flex flex-col gap-6">
 	<div class="flex flex-col gap-3">
-		<Field {form} name="short_id" class="space-y-0">
-			<Control let:attrs>
-				<Label class="text-[1rem]" for="short_id">Short link</Label>
-				<Input
-					{...attrs}
-					placeholder="anijakich"
-					startIcon="link"
-					bind:value={$formData.short_id}
-					disabled
-				></Input>
-			</Control>
-			<FieldErrors />
-		</Field>
-		<Field {form} name="redirect_url" class="w-full space-y-0">
+		<Field {form} name="redirect_url" class="flex w-full flex-col gap-1.5 space-y-0">
 			<Control let:attrs class="w-full">
-				<Label class="text-[1rem]" for="redirect_url">Redirect URL</Label>
+				<Label class="text-[1rem] opacity-70" for="redirect_url">Redirect URL</Label>
 				<Input
 					{...attrs}
+					id="redirect_url"
 					placeholder="https://example.com/some-very-long-link..."
 					type="url"
-					bind:value={$formData.redirect_url}
+					value={chosenLink.redirect_url}
+					disabled
 				/>
 			</Control>
 			<FieldErrors />
 		</Field>
+		<div class="flex flex-col gap-3">
+			<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
+				<Control let:attrs>
+					<Checkbox {...attrs} id="shortid-check" checked={!!chosenLink.short_id} disabled />
+					<Label class="text-[1rem]" for="shortid-check">Custom link</Label>
+				</Control>
+				<FieldErrors />
+			</Field>
+			<Field {form} name="short_id" class="flex flex-col gap-1.5 space-y-0">
+				<Control let:attrs>
+					<Input
+						{...attrs}
+						placeholder="anijakich"
+						startIcon="link"
+						value={chosenLink.short_id}
+						disabled
+					></Input>
+				</Control>
+				<FieldErrors />
+			</Field>
+		</div>
 		<div class="flex w-full gap-3">
-			<div class="flex w-full flex-col gap-3">
-				<Field
-					{form}
-					name="expiration_date_enabled"
-					class="flex w-full items-center gap-3 space-y-0"
-				>
+			<div class="flex w-1/2 flex-col gap-3">
+				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
-						<Checkbox {...attrs} id="time-check" bind:checked={$formData.expiration_date_enabled} />
+						<Checkbox {...attrs} id="time-check" checked={!!chosenLink.expiration_date} disabled />
 						<Label class="text-[1rem]" for="time-check">Time limit</Label>
 					</Control>
 				</Field>
 				<Field {form} name="expiration_date" class="w-full space-y-0">
-					<Control let:attrs>
+					<Control className="w-full" let:attrs>
 						<DatePicker
 							{...attrs}
 							className="w-full"
-							disabled={!$formData.expiration_date_enabled}
-							bind:dateValue={$formData.expiration_date}
+							disabled
+							placeholder="—"
+							value={chosenLink.expiration_date
+								? parseDate(chosenLink.expiration_date.split('T')[0])
+								: undefined}
 						/>
 					</Control>
 					<FieldErrors />
 				</Field>
 			</div>
-			<div class="flex w-full flex-col gap-3">
-				<Field
-					{form}
-					name="redirects_limit_enabled"
-					class="flex w-full items-center gap-3 space-y-0"
-				>
+			<div class="flex w-1/2 flex-col gap-3">
+				<Field {form} name="redirects_limit_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
 						<Checkbox
 							{...attrs}
 							id="visit-check"
-							bind:checked={$formData.redirects_limit_enabled}
+							checked={chosenLink.redirects_limit !== null}
+							disabled
 						/>
 						<Label class="text-[1rem]" for="visit-check">Visit limit</Label>
 					</Control>
 					<FieldErrors />
 				</Field>
-				<Field {form} name="redirects_limit" class="w-full space-y-0">
+				<Field {form} name="redirects_limit" class="space-y-0">
 					<Control let:attrs>
 						<Input
 							{...attrs}
 							startIcon="eye"
-							type="number"
-							disabled={!$formData.redirects_limit_enabled}
-							bind:value={$formData.redirects_limit}
+							type="string"
+							disabled
+							value={chosenLink.redirects_limit !== null ? chosenLink.redirects_limit : 'unlimited'}
 						></Input>
 					</Control>
 					<FieldErrors />
 				</Field>
 			</div>
 		</div>
-		<div class="flex w-full flex-col gap-3">
-			<Field {form} name="passphrase_enabled" class="flex w-full items-center gap-3 space-y-0">
-				<Control let:attrs>
-					<Checkbox {...attrs} id="passphrase" bind:checked={$formData.passphrase_enabled} />
-					<Label class="text-[1rem]" for="passphrase">Password protection</Label>
-				</Control>
-				<FieldErrors />
-			</Field>
-			<Field {form} name="passphrase" class="w-full space-y-0">
-				<Control let:attrs>
-					<Input
-						{...attrs}
-						placeholder="•••••••••••••"
-						startIcon="lock"
-						type="password"
-						disabled={!$formData.passphrase_enabled}
-						bind:value={$formData.passphrase_hash}
-					></Input>
-				</Control>
-				<FieldErrors />
-			</Field>
-		</div>
 	</div>
 	<div class="flex w-full justify-end">
-		<Button variant="primary-custom" size="standard">Save and close</Button>
+		<Sheet.Close>
+			<Button variant="primary-custom" size="standard">Save and close</Button>
+		</Sheet.Close>
 	</div>
 </form>
