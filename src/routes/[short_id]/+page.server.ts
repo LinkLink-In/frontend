@@ -2,6 +2,10 @@ import type { PageServerLoad } from './$types';
 import { client } from '$lib/client';
 
 export const load: PageServerLoad = async ({ params }) => {
+	if (params.short_id === 'pass-fail')
+		return {
+			detail: 'You provided incorrect password.'
+		};
 	const redirect_link = await client.links
 		.getLinkUnauthorized({
 			params: { short_id: params.short_id }
