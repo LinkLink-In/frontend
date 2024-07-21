@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { sendRedirectData } from '$lib/helpers/browserData';
 
 	export let data: RedirectPageData;
 
@@ -12,7 +11,6 @@
 
 	onMount(() => {
 		if (data.detail === null) {
-			sendRedirectData(data.link_id);
 			setTimeout(() => {
 				window.location.href = data.redirect_url;
 			}, 2000);
