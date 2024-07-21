@@ -61,6 +61,9 @@ export const actions: Actions = {
 			if (!form.data.short_id) {
 				setError(form, 'short_id', 'Please specify the short_id');
 			}
+			if (!RegExp('^[A-Za-z0-9]+$').test(form.data.short_id)) {
+				setError(form, 'short_id', 'Inappropriate short link. Please use another one.');
+			}
 		}
 		if (form.data.expiration_date_enabled) {
 			if (!form.data.expiration_date) {

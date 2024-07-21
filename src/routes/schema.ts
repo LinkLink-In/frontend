@@ -1,7 +1,15 @@
 import { z } from 'zod';
 
 export const formSchema = z.object({
-	redirect_url: z.string().url('').startsWith('https://'),
+	redirect_url: z
+		.string()
+		.url('')
+		.regex(
+			new RegExp(
+				'https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)'
+			),
+			'This link is invalid, please use another one.'
+		),
 	short_id_enabled: z.boolean(),
 	short_id: z.string(),
 	expiration_date_enabled: z.boolean(),
