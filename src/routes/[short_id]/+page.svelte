@@ -116,7 +116,7 @@
 				<div class="flex flex-col items-center justify-center gap-16">
 					<i class="fa-solid fa-low-vision scale-[6] text-black/50"></i>
 					<div class="flex flex-col gap-1">
-						<h1 class="text-center text-3xl font-semibold">Invalid link</h1>
+						<h1 class="text-center text-3xl font-semibold">Access blocked</h1>
 						<p class="text-2xl font-semibold opacity-75">{data.detail}</p>
 					</div>
 				</div>
