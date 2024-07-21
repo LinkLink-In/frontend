@@ -218,7 +218,6 @@
 							{...attrs}
 							placeholder="Description for the banner"
 							startIcon="window-maximize"
-							type="password"
 							id="banner-description"
 							class="dark:bg-[#1E1F27]"
 							bind:value={$formData.banner_content}
