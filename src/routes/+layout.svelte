@@ -22,14 +22,16 @@
 		}
 	});
 
-	let dark_theme_check = true;
+	let dark_theme_check = false;
 	$: {
-		if (browser) document.getElementsByTagName('html')[0].classList.add('dark');
+		if (browser)
+			if (!$darkMode) document.getElementsByTagName('html')[0].classList.add('dark');
+			else document.getElementsByTagName('html')[0].classList.remove('dark');
 		$darkMode = dark_theme_check;
 	}
 </script>
 
-<div class="flex min-h-screen w-screen flex-col" class:dark={dark_theme_check}>
+<div class="flex min-h-screen w-screen flex-col">
 	<header
 		class="flex h-16 w-full items-center justify-between px-8 py-4 dark:bg-[#1E1F27] dark:text-[#FFFFFF]"
 	>
