@@ -80,7 +80,7 @@
 	<div
 		class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3 dark:bg-[#1E1F27]`}
 	>
-		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<div class={`flex h-full w-1/2 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
@@ -131,7 +131,7 @@
 				</Field>
 			</div>
 		</div>
-		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
+		<div class={`flex h-full w-1/2 gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
