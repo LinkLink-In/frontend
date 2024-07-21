@@ -119,8 +119,8 @@
 			<div class="flex flex-col gap-3">
 				<Field {form} name="short_id_enabled" class="flex items-center gap-3 space-y-0">
 					<Control let:attrs>
-						<Checkbox {...attrs} id="custom-check" checked disabled />
-						<Label class="text-[1rem]" for="custom-check">Custom link</Label>
+						<Checkbox {...attrs} id="shortid-check" bind:checked={$formData.short_id_enabled} />
+						<Label class="text-[1rem]" for="shortid-check">Custom link</Label>
 					</Control>
 					<FieldErrors />
 				</Field>
@@ -130,23 +130,12 @@
 							{...attrs}
 							placeholder="anijakich"
 							startIcon="link"
+							disabled={!$formData.short_id_enabled}
 							bind:value={$formData.short_id}
 						></Input>
 					</Control>
 					<FieldErrors />
 				</Field>
-			</div>
-			<div class="flex flex-col gap-3">
-				<Field {form} name="stats_enabled" class="flex items-center gap-3 space-y-0">
-					<Control let:attrs>
-						<Checkbox {...attrs} id="stat-check" checked disabled />
-						<Label class="text-[1rem]" for="stat-check">Collect statistics</Label>
-					</Control>
-					<FieldErrors />
-				</Field>
-				<div class="text-sm">
-					Login into your account to collect statistics  and info about visitors.
-				</div>
 			</div>
 		</div>
 	</div>
