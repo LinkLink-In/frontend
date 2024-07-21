@@ -10,12 +10,25 @@
 	export let data;
 	export let chosenLink;
 	import * as Sheet from '$lib/components/ui/sheet';
+	import { onMount } from 'svelte';
 
-	const form = superForm(data, {
-		validators: zodClient(editFormSchema),
-		dataType: 'json'
-	});
+	const form = superForm(
+		{ ...data, banner_id: chosenLink.banner_id, banner_id_enabled: chosenLink.banner_id_enabled },
+		{
+			validators: zodClient(editFormSchema),
+			dataType: 'json'
+		}
+	);
 	const { form: formData, enhance } = form;
+
+	onMount(() => {
+		const el = document.getElementById('banner_id_input');
+		const el_check = document.getElementById('banner-check');
+		el.value = chosenLink.banner_id;
+		if (chosenLink.banner_id) {
+			el_check.click();
+		}
+	});
 </script>
 
 <form method="POST" action="?/editLink" use:enhance class="flex flex-col gap-6">
@@ -104,6 +117,48 @@
 					<FieldErrors />
 				</Field>
 			</div>
+		</div>
+		<div class="flex flex-col gap-3">
+			<Field {form} name="passphrase_enabled" class="flex items-center gap-3 space-y-0">
+				<Control let:attrs>
+					<Checkbox {...attrs} id="passphrase-check" bind:checked={$formData.passphrase_enabled} />
+					<Label class="text-[1rem]" for="passphrase-check">Passphrase</Label>
+				</Control>
+				<FieldErrors />
+			</Field>
+			<Field {form} name="passphrase" class="flex flex-col gap-1.5 space-y-0">
+				<Control let:attrs>
+					<Input
+						{...attrs}
+						placeholder="Enter new passphrase..."
+						startIcon="lock"
+						type="password"
+						bind:value={$formData.passphrase}
+						disabled={!$formData.passphrase_enabled}
+					></Input>
+				</Control>
+				<FieldErrors />
+			</Field>
+			<Field {form} name="banner_id_enabled" class="flex items-center gap-3 space-y-0">
+				<Control let:attrs>
+					<Checkbox {...attrs} id="banner-check" bind:checked={$formData.banner_id_enabled} />
+					<Label class="text-[1rem]" for="banner-check">Banner</Label>
+				</Control>
+				<FieldErrors />
+			</Field>
+			<Field {form} name="banner_id" class="flex flex-col gap-1.5 space-y-0">
+				<Control let:attrs>
+					<Input
+						{...attrs}
+						placeholder="Enter banner ID"
+						startIcon="rectangle-ad"
+						id="banner_id_input"
+						bind:value={$formData.banner_id}
+						disabled={!$formData.banner_id_enabled}
+					></Input>
+				</Control>
+				<FieldErrors />
+			</Field>
 		</div>
 	</div>
 	<div class="flex w-full justify-end">

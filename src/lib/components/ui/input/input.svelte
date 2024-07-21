@@ -9,6 +9,7 @@
 	let className: $$Props['class'] = undefined;
 	export let value: $$Props['value'] = undefined;
 	export let disabled: $$Props['disabled'] = undefined;
+	export let id;
 	export { className as class };
 
 	// Workaround for https://github.com/sveltejs/svelte/issues/9305
@@ -30,6 +31,7 @@
 			startIcon === '' ? '' : 'pl-9',
 			endIcon === '' ? '' : 'pr-9'
 		)}
+		{id}
 		bind:value
 		{readonly}
 		{disabled}
