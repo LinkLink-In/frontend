@@ -5,6 +5,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Calendar } from '$lib/components/ui/calendar/index.js';
 	import { Root, Trigger, Content } from '$lib/components/ui/popover/index.js';
+	import { darkMode } from '$lib/stores/dark_mode.ts';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -25,6 +26,7 @@
 		<Button
 			variant="outline"
 			class={cn('w-[280px] justify-start text-left font-normal', !value && 'text-muted-foreground')}
+			style={$darkMode ? ' --background: 233 13% 14%;' : ''}
 			{disabled}
 			builders={[builder]}
 		>
@@ -32,7 +34,14 @@
 			{value ? df.format(value.toDate(getLocalTimeZone())) : 'Pick a date'}
 		</Button>
 	</Trigger>
-	<Content class="w-auto p-0">
-		<Calendar bind:value initialFocus />
+	<Content class="w-auto border-[#1E1F27] p-0">
+		<Calendar
+			bind:value
+			initialFocus
+			class={$darkMode ? 'bg-[#1E1F27] text-[#FFFFFF]' : ''}
+			style={$darkMode
+				? '--accent: 234, 13%, 5%; --accent-foreground: 0 0% 100%; --input: 233 13% 14%;'
+				: ''}
+		/>
 	</Content>
 </Root>
