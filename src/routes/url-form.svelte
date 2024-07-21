@@ -192,40 +192,36 @@
 					</Control>
 					<FieldErrors />
 				</Field>
-				<Field {form} name="short_id" class="space-y-0">
-					<Control let:attrs>
-						<Input
-							{...attrs}
-							placeholder="Title for the banner"
-							startIcon="rectangle-ad"
-							id="banner-title"
-							disabled={!$formData.banner_enabled}
-							class="dark:bg-[#1E1F27]"
-							bind:value={$formData.banner_title}
-						></Input>
-					</Control>
-					<FieldErrors />
-				</Field>
-			</div>
-			<div class="flex flex-col gap-3">
-				<Field {form} name="passphrase" class="flex flex-col gap-3 space-y-0">
-					<Control let:attrs>
-						<Label
-							class={`h-[1.625rem] items-center text-[1rem] ${!$formData.banner_enabled ? 'opacity-50' : ''}`}
-							for="banner-description">Description</Label
-						>
-						<Input
-							{...attrs}
-							placeholder="Description for the banner"
-							startIcon="window-maximize"
-							id="banner-description"
-							class="dark:bg-[#1E1F27]"
-							bind:value={$formData.banner_content}
-							disabled={!$formData.banner_enabled}
-						></Input>
-					</Control>
-					<FieldErrors />
-				</Field>
+				<div class="flex flex-col gap-3">
+					<Field {form} name="short_id" class="space-y-0">
+						<Control let:attrs>
+							<Input
+								{...attrs}
+								placeholder="Title for the banner"
+								startIcon="rectangle-ad"
+								id="banner-title"
+								disabled={!$formData.banner_enabled}
+								class="dark:bg-[#1E1F27]"
+								bind:value={$formData.banner_title}
+							></Input>
+						</Control>
+						<FieldErrors />
+					</Field>
+					<Field {form} name="passphrase" class="flex flex-col gap-3 space-y-0">
+						<Control let:attrs>
+							<Input
+								{...attrs}
+								placeholder="Description for the banner"
+								startIcon="window-maximize"
+								id="banner-description"
+								class="dark:bg-[#1E1F27]"
+								bind:value={$formData.banner_content}
+								disabled={!$formData.banner_enabled}
+							></Input>
+						</Control>
+						<FieldErrors />
+					</Field>
+				</div>
 			</div>
 		</div>
 	</div>
