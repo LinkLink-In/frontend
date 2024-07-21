@@ -12,6 +12,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Calendar } from '$lib/components/ui/calendar/index.js';
 	import { Root, Trigger, Content } from '$lib/components/ui/popover/index.js';
+	import { darkMode } from '$lib/stores/dark_mode.ts';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -38,6 +39,7 @@
 				!value && 'text-muted-foreground',
 				className
 			)}
+			style={$darkMode ? ' --background: 233 13% 14%;' : ''}
 			{disabled}
 			builders={[builder]}
 		>
@@ -45,7 +47,15 @@
 			{value ? df.format(value.toDate('Europe/Moscow')) : placeholder}
 		</Button>
 	</Trigger>
-	<Content class="w-auto p-0">
-		<Calendar minValue={today('Europe/Moscow').add({ days: 1 })} bind:value initialFocus />
+	<Content class="w-auto border-[#1E1F27] p-0">
+		<Calendar
+			class={$darkMode ? 'bg-[#1E1F27] text-[#FFFFFF]' : ''}
+			style={$darkMode
+				? '--accent: 234, 13%, 5%; --accent-foreground: 0 0% 100%; --input: 233 13% 14%;'
+				: ''}
+			minValue={today('Europe/Moscow').add({ days: 1 })}
+			bind:value
+			initialFocus
+		/>
 	</Content>
 </Root>

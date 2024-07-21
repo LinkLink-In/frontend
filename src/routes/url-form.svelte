@@ -54,7 +54,12 @@
 	}
 </script>
 
-<form method="POST" action={action ? action : ''} use:enhance class="flex w-full flex-col gap-3">
+<form
+	method="POST"
+	action={action ? action : ''}
+	use:enhance
+	class="flex w-full flex-col gap-3 dark:text-[#FFFFFF]"
+>
 	<div class="flex gap-4">
 		<Field {form} name="redirect_url" class="w-full space-y-0">
 			<Control let:attrs class="w-full">
@@ -62,6 +67,7 @@
 					{...attrs}
 					placeholder="https://example.com/some-very-long-link..."
 					type="url"
+					class="dark:bg-[#1E1F27]"
 					bind:value={$formData.redirect_url}
 					endIconHandler={handleCopy}
 					bind:endIcon={endIconVal}
@@ -71,7 +77,9 @@
 		</Field>
 		<Button type="">Generate link</Button>
 	</div>
-	<div class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3`}>
+	<div
+		class={`flex items-center ${isPropsHorizontal ? '' : 'gap-3'} rounded-xl bg-[#FFFFFF] p-3 dark:bg-[#1E1F27]`}
+	>
 		<div class={`flex h-full gap-3 p-3 ${isPropsHorizontal ? 'flex-row' : 'flex-col'}`}>
 			<div class="flex flex-col gap-3">
 				<Field {form} name="expiration_date_enabled" class="flex items-center gap-3 space-y-0">
@@ -113,6 +121,7 @@
 							startIcon="eye"
 							type="number"
 							min="1"
+							class="dark:bg-[#1E1F27]"
 							disabled={!$formData.redirects_limit_enabled}
 							bind:value={$formData.redirects_limit}
 							className={isPropsHorizontal ? 'w-[10rem]' : ''}
@@ -138,6 +147,7 @@
 							placeholder="anijakich"
 							startIcon="link"
 							disabled={!$formData.short_id_enabled}
+							class="dark:bg-[#1E1F27]"
 							bind:value={$formData.short_id}
 						></Input>
 					</Control>
