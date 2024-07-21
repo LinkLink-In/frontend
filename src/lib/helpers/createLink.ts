@@ -60,7 +60,7 @@ export async function createLink(event: RequestEvent, zod: any) {
 	if (form.data.redirects_limit_enabled) {
 		if (!form.data.redirects_limit) {
 			setError(form, 'redirects_limit', 'Please specify the redirects limit');
-		} else if (parseInt(form.data.redirects_limit) > 0) {
+		} else if (parseInt(form.data.redirects_limit) <= 0) {
 			setError(form, 'redirects_limit', 'Redirects limit must be a positive number');
 		}
 	}
